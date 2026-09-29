@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joaquín | Data Analytics Portfolio</title>
+  <meta name="description" content="Portfolio de Joaquín, analista de datos." />
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+
+  <!-- Fuentes: Montserrat (principal) + fuentes de la intro -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@500&family=Pacifico&family=Space+Mono&family=Bebas+Neue&family=Noto+Sans+JP:wght@500&family=Caveat:wght@600&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="intro-activa">
+
+  <!-- ===== INTRO DE CARGA ===== -->
+  <div id="intro" aria-hidden="true">
+    <span id="intro-texto"></span>
+  </div>
+
+  <main class="contenedor">
+
+    <!-- ===== 1. PERFIL / CV ===== -->
+    <!-- EDITA: tu nombre, presentación, contacto y columnas del CV -->
+    <section class="tarjeta cv">
+      <p class="cv-etiqueta">CV</p>
+      <div class="cv-nombre">
+        <h1>Joaquín [Apellido]</h1>
+        <span class="linea-larga"></span>
+      </div>
+
+      <p class="cv-intro">
+        Analista de datos enfocado en transformar datos en decisiones. Me apasiona limpiar,
+        modelar y visualizar información para encontrar patrones y contar historias claras
+        con dashboards e informes accionables.
+      </p>
+
+      <ul class="contacto">
+        <li>
+          <svg viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          Madrid, España
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          <a href="mailto:joaquin@email.com">joaquin@email.com</a>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg>
+          <a href="https://www.linkedin.com/in/tu-usuario" target="_blank" rel="noopener">linkedin.com/in/tu-usuario</a>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24"><path d="M9 19c-4 1.5-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+          <a href="https://github.com/tu-usuario" target="_blank" rel="noopener">github.com/tu-usuario</a>
+        </li>
+      </ul>
+
+      <div class="cv-columnas">
+        <div>
+          <h3 class="titulo-col">Educación</h3>
+          <ul class="lista">
+            <li><strong>Máster en Data Science</strong> — Universidad X, 2023–2024</li>
+            <li><strong>Grado en Economía</strong> — Universidad Y, 2018–2022</li>
+            <li><strong>Certificación Google Data Analytics</strong> — Coursera, 2023</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="titulo-col">Herramientas y Skills</h3>
+          <ul class="lista">
+            <li><strong>SQL</strong> — PostgreSQL, MySQL, BigQuery</li>
+            <li><strong>Python</strong> — Pandas, NumPy, Matplotlib, Scikit-learn</li>
+            <li><strong>Power BI</strong> — DAX, Power Query, modelado</li>
+            <li><strong>Excel</strong> — tablas dinámicas, Power Pivot</li>
+            <li><strong>Tableau</strong> — dashboards interactivos</li>
+            <li><strong>Estadística</strong> — A/B testing, regresión</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="titulo-col">Habilidades blandas</h3>
+          <ul class="lista">
+            <li><strong>Comunicación</strong> — traducir datos a negocio</li>
+            <li><strong>Pensamiento crítico</strong> — preguntas correctas</li>
+            <li><strong>Trabajo en equipo</strong> — entornos ágiles</li>
+            <li><strong>Autonomía</strong> — aprendizaje continuo</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="titulo-col">Experiencia</h3>
+          <ul class="lista">
+            <li><strong>Data Analyst</strong> — Empresa A, 2024–actualidad. Dashboards de ventas y KPIs.</li>
+            <li><strong>Analista Junior</strong> — Empresa B, 2022–2023. Reporting y automatización en Excel/SQL.</li>
+            <li><strong>Prácticas BI</strong> — Empresa C, 2022. Limpieza y modelado de datos.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 2. PROYECTOS ===== -->
+    <!-- Los proyectos se generan desde el array PROYECTOS en script.js -->
+    <section class="proyectos">
+      <h2 class="titulo-seccion">Proyectos</h2>
+      <div id="grid-proyectos" class="grid"></div>
+    </section>
+  </main>
+
+  <!-- ===== 3. FOOTER ===== -->
+  <!-- EDITA: enlaces de contacto -->
+  <footer class="footer">
+    <div class="footer-enlaces">
+      <a href="mailto:joaquin@email.com">Email</a>
+      <a href="https://www.linkedin.com/in/tu-usuario" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/tu-usuario" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <p>© <span id="anio"></span> Joaquín [Apellido]. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- ===== MODAL DE PROYECTO ===== -->
+  <div id="modal" class="modal" hidden>
+    <div class="modal-caja" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+      <button class="modal-cerrar" aria-label="Cerrar">&times;</button>
+      <img id="modal-img" src="" alt="" />
+      <h2 id="modal-titulo"></h2>
+      <p id="modal-subtitulo" class="subtitulo"></p>
+      <p id="modal-descripcion"></p>
+      <h4>Objetivo</h4>
+      <p id="modal-objetivo"></p>
+      <h4>Herramientas usadas</h4>
+      <div id="modal-tags" class="tags"></div>
+      <h4>Resultados y conclusiones</h4>
+      <ul id="modal-resultados" class="lista"></ul>
+      <a id="modal-enlace" class="boton" href="#" target="_blank" rel="noopener">Ver repositorio / dashboard</a>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
