@@ -18,3 +18,6 @@ Sube la carpeta a Netlify tal cual. No necesita configuración.
 - Nombre, presentación, contacto y CV: en `index.html` (busca los comentarios `EDITA`)
 - Proyectos: en el array `PROYECTOS` de `script.js`
 - Imágenes: sustituye los archivos de `images/`
+
+Cada vez que se haga un cambio nuevo que me guste -> git add . -> git commit -m "mensaje" -> git push
+Si algo se ha cambiado y no me gusta y quiero volver a la ultima versión de github -> git fetch origin -> git reset --hard origin/main -> git clean -fd
