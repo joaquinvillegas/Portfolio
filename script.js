@@ -202,6 +202,7 @@ function abrirModal(i) {
   document.getElementById("modal-enlace").href = p.detalle.enlace;
   modal.hidden = false;
   document.body.classList.add("modal-abierto");
+  modal.querySelector(".modal-caja").scrollTop = 0;
   modal.querySelector(".modal-cerrar").focus();
 }
 

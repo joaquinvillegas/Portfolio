@@ -214,6 +214,11 @@ a { color: inherit; }
   max-height: 90vh;
   overflow-y: auto;
   padding: 28px 32px 32px;
+  scrollbar-width: none; /* Firefox y navegadores modernos */
+  -ms-overflow-style: none; /* IE y Edge */
+}
+.modal-caja::-webkit-scrollbar {
+  display: none; /* Chrome, Safari y Opera */
 }
 .modal-caja img {
   width: 100%;
