@@ -3,14 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Joaquín | Data Analytics Portfolio</title>
-  <meta name="description" content="Portfolio de Joaquín, analista de datos." />
+  <title>Joaquín Villegas | Data Analytics Portfolio</title>
+  <meta name="description" content="Portfolio de Joaquín Villegas, analista de datos. Proyectos de Power BI, Python, SQL y Machine Learning." />
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
 
-  <!-- Fuentes: Montserrat (principal) + fuentes de la intro -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@500&family=Pacifico&family=Space+Mono&family=Bebas+Neue&family=Noto+Sans+SC:wght@500&family=Noto+Sans+JP:wght@500&family=Caveat:wght@600&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet" />
+  <!-- Sin Google Fonts: se usa Times New Roman (nativa del sistema) -->
 
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -19,9 +16,9 @@
   <!-- ===== BARRA DE NAVEGACIÓN SUPERIOR ===== -->
   <header class="navbar-wrapper">
     <nav class="navbar" aria-label="Navegación principal">
-      <a href="#about-me" class="nav-link">About Me</a>
-      <a href="#projects" class="nav-link">Projects</a>
-      <a href="#kaggle" class="nav-link">Kaggle Competitions</a>
+      <a href="#about"    class="nav-link" id="nav-about"    aria-label="Ir a About Me">About Me</a>
+      <a href="#projects" class="nav-link" id="nav-projects" aria-label="Ir a Projects">Projects</a>
+      <a href="#kaggle"   class="nav-link" id="nav-kaggle"   aria-label="Ir a Kaggle Competitions">Kaggle Competitions</a>
     </nav>
   </header>
 
@@ -34,12 +31,12 @@
 
   <main class="contenedor">
 
-    <!-- ===== 1. PERFIL / CV ===== -->
+    <!-- ===== 1. ABOUT ME / CV ===== -->
     <!-- EDITA: tu nombre, presentación, contacto y columnas del CV -->
-    <section id="about-me" class="tarjeta cv">
+    <section id="about" class="seccion tarjeta cv" aria-labelledby="about-titulo">
       <p class="cv-etiqueta">CV</p>
       <div class="cv-nombre">
-        <h1>Joaquín [Apellido]</h1>
+        <h1 id="about-titulo">Joaquín Villegas</h1>
         <span class="linea-larga"></span>
       </div>
 
@@ -56,15 +53,15 @@
         </li>
         <li>
           <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-          <a href="mailto:joaquin@email.com">joaquin@email.com</a>
+          <a href="mailto:joaquinvc03@gmail.com">joaquinvc03@gmail.com</a>
         </li>
         <li>
           <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg>
-          <a href="https://www.linkedin.com/in/tu-usuario" target="_blank" rel="noopener">linkedin.com/in/tu-usuario</a>
+          <a href="https://www.linkedin.com/in/joaquinvillegascuesta" target="_blank" rel="noopener">linkedin.com/in/joaquinvillegascuesta</a>
         </li>
         <li>
           <svg viewBox="0 0 24 24"><path d="M9 19c-4 1.5-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
-          <a href="https://github.com/tu-usuario" target="_blank" rel="noopener">github.com/tu-usuario</a>
+          <a href="https://github.com/joaquinvillegas" target="_blank" rel="noopener">github.com/joaquinvillegas</a>
         </li>
       </ul>
 
@@ -110,38 +107,49 @@
 
     <!-- ===== 2. PROYECTOS ===== -->
     <!-- Carrusel horizontal generado desde el array PROYECTOS en script.js -->
-    <section id="projects" class="proyectos">
+    <section id="projects" class="seccion proyectos" aria-labelledby="projects-titulo">
       <div class="proyectos-cabecera">
-        <h2 class="titulo-seccion">Projects</h2>
-        <div class="carrusel-controles" aria-label="Controles del carrusel">
-          <button class="carrusel-btn" id="carrusel-prev" aria-label="Proyecto anterior" disabled>
-            <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-          <span class="carrusel-indicador" id="carrusel-indicador" aria-live="polite">1 / 6</span>
-          <button class="carrusel-btn" id="carrusel-next" aria-label="Siguiente proyecto">
-            <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
-        </div>
+        <h2 class="titulo-seccion" id="projects-titulo">Projects</h2>
       </div>
 
-      <div class="carrusel-viewport" id="carrusel-viewport" tabindex="0" aria-label="Carrusel de proyectos" role="region">
+      <div class="carrusel-viewport" id="carrusel-viewport" tabindex="0"
+           aria-label="Carrusel de proyectos" role="region">
         <div class="carrusel-track" id="carrusel-track"></div>
+      </div>
+
+      <!-- Flechas debajo del carrusel, centradas -->
+      <div class="carrusel-controles" aria-label="Controles del carrusel">
+        <button class="carrusel-btn" id="carrusel-prev" aria-label="Proyecto anterior" disabled>
+          <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="carrusel-indicador" id="carrusel-indicador" aria-live="polite">1 / 6</span>
+        <button class="carrusel-btn" id="carrusel-next" aria-label="Siguiente proyecto">
+          <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
       </div>
     </section>
 
     <!-- ===== 3. KAGGLE COMPETITIONS ===== -->
     <!-- EDITA: tus participaciones y competiciones de Kaggle -->
-    <section id="kaggle" class="kaggle">
+    <!-- EDITA IMÁGENES: cambia el atributo src de cada <img class="kaggle-thumb"> por la ruta de tu imagen -->
+    <section id="kaggle" class="seccion kaggle" aria-labelledby="kaggle-titulo">
       <div class="seccion-cabecera">
-        <h2 class="titulo-seccion">Kaggle Competitions</h2>
-        <a class="kaggle-perfil-enlace boton" href="https://www.kaggle.com/tu-usuario" target="_blank" rel="noopener">
+        <h2 class="titulo-seccion" id="kaggle-titulo">Kaggle Competitions</h2>
+        <a class="kaggle-perfil-enlace boton"
+           href="https://www.kaggle.com/tu-usuario"
+           target="_blank" rel="noopener"
+           aria-label="Ver perfil de Joaquín Villegas en Kaggle">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.246l-4.734-6.07-1.406 1.359v4.664c0 .203-.094.305-.281.305H6.281c-.187 0-.281-.102-.281-.305V.297c0-.203.094-.305.281-.305h2.211c.188 0 .281.102.281.305v14.437l5.906-6.164c.141-.141.305-.211.492-.211h3.281c.141 0 .234.047.281.141.047.117.023.211-.07.281l-6.328 6.258 6.68 8.539c.094.117.117.211.07.281z"/></svg>
           Ver perfil en Kaggle
         </a>
       </div>
 
       <div class="kaggle-grid">
+
         <article class="tarjeta kaggle-card">
+          <!-- EDITA: src="images/kaggle-1.png" con tu imagen real. Por defecto usa proyecto-1.svg -->
+          <img class="kaggle-thumb" src="images/proyecto-1.svg"
+               alt="Miniatura — Predict Student Performance" loading="lazy" />
           <div class="kaggle-meta">
             <span class="kaggle-badge">Top 7% · Medalla de Bronce</span>
             <span class="kaggle-tipo">Competencia Destacada</span>
@@ -159,11 +167,14 @@
           </div>
           <div class="kaggle-pie">
             <span class="kaggle-posicion">Posición: <strong>94 / 1.345 equipos</strong></span>
-            <a href="https://www.kaggle.com/competitions" target="_blank" rel="noopener" class="enlace-simple">Ver en Kaggle &rarr;</a>
+            <a href="https://www.kaggle.com/competitions" target="_blank" rel="noopener" class="enlace-simple" aria-label="Ver competición en Kaggle">Ver en Kaggle &rarr;</a>
           </div>
         </article>
 
         <article class="tarjeta kaggle-card">
+          <!-- EDITA: src="images/kaggle-2.png" con tu imagen real -->
+          <img class="kaggle-thumb" src="images/proyecto-2.svg"
+               alt="Miniatura — Spaceship Titanic" loading="lazy" />
           <div class="kaggle-meta">
             <span class="kaggle-badge">Top 12%</span>
             <span class="kaggle-tipo">Tabular Series</span>
@@ -181,11 +192,14 @@
           </div>
           <div class="kaggle-pie">
             <span class="kaggle-posicion">Score: <strong>0.812 CV</strong></span>
-            <a href="https://www.kaggle.com/competitions" target="_blank" rel="noopener" class="enlace-simple">Ver en Kaggle &rarr;</a>
+            <a href="https://www.kaggle.com/competitions" target="_blank" rel="noopener" class="enlace-simple" aria-label="Ver competición en Kaggle">Ver en Kaggle &rarr;</a>
           </div>
         </article>
 
         <article class="tarjeta kaggle-card">
+          <!-- EDITA: src="images/kaggle-3.png" con tu imagen real -->
+          <img class="kaggle-thumb" src="images/proyecto-3.svg"
+               alt="Miniatura — House Prices" loading="lazy" />
           <div class="kaggle-meta">
             <span class="kaggle-badge">Regresión Tabular</span>
             <span class="kaggle-tipo">Competencia de Aprendizaje</span>
@@ -203,29 +217,57 @@
           </div>
           <div class="kaggle-pie">
             <span class="kaggle-posicion">Métrica: <strong>0.114 RMSE</strong></span>
-            <a href="https://www.kaggle.com/competitions" target="_blank" rel="noopener" class="enlace-simple">Ver en Kaggle &rarr;</a>
+            <a href="https://www.kaggle.com/competitions" target="_blank" rel="noopener" class="enlace-simple" aria-label="Ver competición en Kaggle">Ver en Kaggle &rarr;</a>
           </div>
         </article>
+
       </div>
     </section>
+
   </main>
 
-  <!-- ===== 4. FOOTER ===== -->
+  <!-- ===== FOOTER ===== -->
   <!-- EDITA: enlaces de contacto -->
   <footer class="footer">
     <div class="footer-enlaces">
-      <a href="mailto:joaquin@email.com">Email</a>
-      <a href="https://www.linkedin.com/in/tu-usuario" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://github.com/tu-usuario" target="_blank" rel="noopener">GitHub</a>
+
+      <!-- Gmail -->
+      <a href="mailto:joaquinvc03@gmail.com" aria-label="Enviar email a Joaquín Villegas">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="2" y="4" width="20" height="16" rx="2" fill="#EA4335" opacity="0.15" stroke="#EA4335" stroke-width="1.5"/>
+          <path d="M2 7l10 7 10-7" stroke="#EA4335" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        joaquinvc03@gmail.com
+      </a>
+
+      <!-- GitHub -->
+      <a href="https://github.com/joaquinvillegas" target="_blank" rel="noopener" aria-label="Perfil de GitHub de Joaquín Villegas">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M9 19c-4 1.5-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"
+            stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        github.com/joaquinvillegas
+      </a>
+
+      <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/in/joaquinvillegascuesta" target="_blank" rel="noopener" aria-label="Perfil de LinkedIn de Joaquín Villegas">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="4" fill="#0A66C2" opacity="0.15" stroke="#0A66C2" stroke-width="1.5"/>
+          <path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"
+            stroke="#0A66C2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        linkedin.com/in/joaquinvillegascuesta
+      </a>
+
     </div>
-    <p>© <span id="anio"></span> Joaquín [Apellido]. Todos los derechos reservados.</p>
+    <p>© <span id="anio"></span> Joaquín Villegas. Todos los derechos reservados.</p>
   </footer>
 
   <!-- ===== MODAL DE PROYECTO ===== -->
   <div id="modal" class="modal" hidden>
     <div class="modal-caja" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
-      <button class="modal-cerrar" aria-label="Cerrar">&times;</button>
-      
+      <button class="modal-cerrar" aria-label="Cerrar modal">&times;</button>
+
       <!-- 1. Imagen del proyecto -->
       <img id="modal-img" src="" alt="" />
 
@@ -237,10 +279,10 @@
         <h2 id="modal-titulo"></h2>
         <p id="modal-subtitulo" class="subtitulo"></p>
         <p id="modal-descripcion"></p>
-        
+
         <h4>Objetivo</h4>
         <p id="modal-objetivo"></p>
-        
+
         <h4>Resultados y conclusiones</h4>
         <ul id="modal-resultados" class="lista"></ul>
       </div>
