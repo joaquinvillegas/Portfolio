@@ -110,47 +110,70 @@ const PROYECTOS = [
 ];
 
 /* =========================================================
-   INTRO — saludos, fuentes y tiempos
+   INTRO — saludos, texto fijo, fuentes y tiempos
    ========================================================= */
 const SALUDOS = [
   { texto: "Hola", fuente: "'Playfair Display', serif" },
   { texto: "Hello", fuente: "'Pacifico', cursive" },
-  { texto: "Bonjour", fuente: "'Space Mono', monospace" },
-  { texto: "Ciao", fuente: "'Montserrat', sans-serif" },
-  { texto: "Hallo", fuente: "'Bebas Neue', sans-serif" },
-  { texto: "こんにちは", fuente: "'Noto Sans JP', sans-serif" },
-  { texto: "Olá", fuente: "'Caveat', cursive" }
-];
-const FINAL = { texto: "Soy Joaquín", fuente: "'Cormorant Garamond', serif", estilo: "italic" }; // EDITA: tu nombre
-const DURACION_SALUDO = 750; // ms por saludo
-const TRANSICION = 300;      // ms del fade (igual que en styles.css)
+  { texto: "你好", fuente: "'Noto Sans SC', sans-serif" },
+  { texto: "Ciao", fuente: "'Montserrat', sans-serif" }
+]; // EDITA: lista de saludos (puedes añadir o quitar)
+const TEXTO_FIJO = { 
+  texto: ", soy Joaquín", // EDITA: tu nombre y texto fijo a la derecha
+  fuente: "'Cormorant Garamond', serif", 
+  estilo: "italic" 
+};
+const DURACION_SALUDO = 500; // ms por saludo
+const TRANSICION = 250;      // ms del fade/desplazamiento (igual que en styles.css)
 
 const espera = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function iniciarIntro() {
   const intro = document.getElementById("intro");
-  const texto = document.getElementById("intro-texto");
+  const frase = document.getElementById("intro-frase");
+  const saludoEl = document.getElementById("intro-saludo");
+  const fijoEl = document.getElementById("intro-fijo");
 
-  const mostrar = async (item, duracion, salir = true) => {
-    texto.className = "";
-    texto.textContent = item.texto;
-    texto.style.fontFamily = item.fuente;
-    texto.style.fontStyle = item.estilo || "normal";
-    void texto.offsetWidth; // reinicia la transición
-    texto.classList.add("visible");
+  if (!intro || !frase || !saludoEl || !fijoEl) return;
+
+  // Configurar texto fijo a la derecha
+  fijoEl.textContent = TEXTO_FIJO.texto;
+  fijoEl.style.fontFamily = TEXTO_FIJO.fuente;
+  fijoEl.style.fontStyle = TEXTO_FIJO.estilo || "normal";
+  void fijoEl.offsetWidth;
+  fijoEl.classList.add("visible");
+
+  const mostrarSaludo = async (item, duracion, salir = true) => {
+    saludoEl.className = "";
+    saludoEl.textContent = item.texto;
+    saludoEl.style.fontFamily = item.fuente;
+    saludoEl.style.fontStyle = item.estilo || "normal";
+    void saludoEl.offsetWidth; // reinicia la transición
+    saludoEl.classList.add("visible");
     await espera(duracion - (salir ? TRANSICION : 0));
     if (salir) {
-      texto.classList.replace("visible", "saliendo");
+      saludoEl.classList.replace("visible", "saliendo");
       await espera(TRANSICION);
     }
   };
 
-  for (const saludo of SALUDOS) await mostrar(saludo, DURACION_SALUDO);
-  await mostrar(FINAL, 1200, false);
+  // Recorrer los saludos
+  for (let i = 0; i < SALUDOS.length; i++) {
+    const esUltimo = i === SALUDOS.length - 1;
+    await mostrarSaludo(SALUDOS[i], DURACION_SALUDO, !esUltimo);
+  }
 
+  // Pausa final para leer la frase completa
+  await espera(450);
+
+  // Animación de salida de la frase completa
+  frase.classList.add("saliendo");
+  await espera(TRANSICION);
+
+  // Desvanecer fondo y restaurar interacción
   intro.classList.add("oculto");
   document.body.classList.remove("intro-activa");
-  await espera(600);
+  await espera(500);
   intro.remove();
 }
 
