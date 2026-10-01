@@ -117,6 +117,76 @@ const PROYECTOS = [
 ];
 
 /* =========================================================
+   KAGGLE COMPETITIONS — EDITA AQUÍ TUS PARTICIPACIONES
+   Cada objeto genera una tarjeta en #kaggle y su modal de detalle.
+   ========================================================= */
+const KAGGLE_COMPETICIONES = [
+  {
+    titulo: "Predict Student Performance from Game Play",
+    subtitulo: "Predicción de rendimiento estudiantil mediante logs de juego",
+    badge: "Top 7% · Medalla de Bronce",
+    tipo: "Competencia Destacada",
+    posicion: "Posición: <strong>94 / 1.345 equipos</strong>",
+    descripcion: "Modelo de Machine Learning para predecir si los estudiantes responderán correctamente preguntas sobre un juego educativo a partir del análisis temporal de sus interacciones.",
+    tags: ["Python", "LightGBM", "Feature Engineering", "Time Series"],
+    imagen: "images/proyecto-1.svg",
+    enlace: "https://www.kaggle.com/competitions",
+    detalle: {
+      descripcionLarga: "Modelo de Machine Learning para predecir si los estudiantes responderán correctamente preguntas sobre un juego educativo a partir del análisis temporal de sus interacciones.",
+      objetivo: "Predecir en tiempo real el éxito del estudiante en cada nivel evaluativo para permitir intervenciones pedagógicas adaptativas.",
+      resultados: [
+        "Feature engineering exhaustivo sobre ventanas temporales acumuladas y patrones de clics.",
+        "Modelo LightGBM con validación GroupKFold por estudiante para evitar data leakage.",
+        "Posición final en el Top 7% y medalla de bronce entre 1.345 equipos internacionales."
+      ],
+      enlace: "https://www.kaggle.com/competitions"
+    }
+  },
+  {
+    titulo: "Spaceship Titanic",
+    subtitulo: "Clasificación binaria y transporte interdimensional",
+    badge: "Top 12%",
+    tipo: "Tabular Series",
+    posicion: "Score: <strong>0.812 CV</strong>",
+    descripcion: "Limpieza y preprocesamiento de datos con imputación avanzada, análisis exploratorio, encoding de variables categóricas complejas y ensamblado de modelos XGBoost y CatBoost.",
+    tags: ["Python", "CatBoost", "XGBoost", "Ensemble"],
+    imagen: "images/proyecto-2.svg",
+    enlace: "https://www.kaggle.com/competitions",
+    detalle: {
+      descripcionLarga: "Limpieza y preprocesamiento de datos con imputación avanzada, análisis exploratorio, encoding de variables categóricas complejas y ensamblado de modelos XGBoost y CatBoost.",
+      objetivo: "Predecir qué pasajeros fueron transportados a una dimensión alternativa durante la colisión de la nave espacial.",
+      resultados: [
+        "Extracción de cabina, cubierta, número y lado para enriquecer la señal espacial.",
+        "Imputación por grupos de edad, gasto en comodidades y origen planetario.",
+        "Ensemble ponderado de XGBoost, CatBoost y LightGBM alcanzando 0.812 en cross-validation."
+      ],
+      enlace: "https://www.kaggle.com/competitions"
+    }
+  },
+  {
+    titulo: "House Prices: Advanced Regression Techniques",
+    subtitulo: "Predicción de precios inmobiliarios con 79 variables",
+    badge: "Regresión Tabular",
+    tipo: "Competencia de Aprendizaje",
+    posicion: "Métrica: <strong>0.114 RMSE</strong>",
+    descripcion: "Tratamiento de asimetría (skewness) con transformaciones logarítmicas, regularización Lasso/Ridge, optimización de hiperparámetros con Optuna y stacking final.",
+    tags: ["Python", "Scikit-learn", "Optuna", "Lasso / Ridge"],
+    imagen: "images/proyecto-3.svg",
+    enlace: "https://www.kaggle.com/competitions",
+    detalle: {
+      descripcionLarga: "Tratamiento de asimetría (skewness) con transformaciones logarítmicas, regularización Lasso/Ridge, optimización de hiperparámetros con Optuna y stacking final.",
+      objetivo: "Desarrollar un modelo predictivo robusto para tasar el precio de venta residencial a partir de 79 variables heterogéneas.",
+      resultados: [
+        "Transformación Box-Cox y log-transform sobre variables con alta asimetría.",
+        "Optimización bayesiana de hiperparámetros con Optuna para modelos lineales regularizados y árboles.",
+        "Stacking de Lasso, Ridge, GradientBoosting y XGBoost logrando un score de 0.114 RMSE."
+      ],
+      enlace: "https://www.kaggle.com/competitions"
+    }
+  }
+];
+
+/* =========================================================
    INTRO — saludos, texto fijo, fuentes y tiempos
    ========================================================= */
 const SALUDOS = [
@@ -132,7 +202,7 @@ const TEXTO_FIJO = {
   estilo: "italic"
 };
 
-const DURACION_SALUDO = 410; // ms por saludo (~18 % más rápido que 500 ms)
+const DURACION_SALUDO = 720; // ms por saludo (más pausado y legible)
 const TRANSICION = 200;      // ms del fade/desplazamiento (debe coincidir con styles.css)
 
 const espera = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -258,9 +328,45 @@ window.addEventListener("hashchange", () => {
 });
 
 /* =========================================================
-   CARRUSEL DE PROYECTOS — Efecto foco horizontal
+   SKILLS CON COLOR — EDITA AQUÍ EL COLOR DE CADA SKILL
+   Colores disponibles: 'amarillo', 'verde', 'azul', 'naranja',
+                        'morado', 'turquesa', 'rojo', 'rosa'
+   Cualquier skill no incluida en el mapa usará el estilo 'neutro'.
    ========================================================= */
-const crearTags = (tags) => tags.map((t) => `<span class="tag">${t}</span>`).join("");
+const MAPA_COLORES_SKILLS = {
+  // EDITA: asignación de skill -> tono de color
+  "Power BI": "amarillo",
+  "DAX": "amarillo",
+  "SQL": "azul",
+  "BigQuery": "azul",
+  "Python": "verde",
+  "Pandas": "verde",
+  "Scikit-learn": "verde",
+  "Machine Learning": "verde",
+  "LightGBM": "amarillo",
+  "CatBoost": "amarillo",
+  "XGBoost": "naranja",
+  "Optuna": "azul",
+  "Lasso / Ridge": "turquesa",
+  "Feature Engineering": "turquesa",
+  "Time Series": "morado",
+  "Ensemble": "morado",
+  "Excel": "verde",
+  "Tableau": "azul",
+  "Estadística": "morado",
+  "A/B Testing": "morado",
+  "Cohortes": "turquesa",
+  "Visualización": "turquesa",
+  "Automatización": "naranja",
+  "People Analytics": "rosa"
+};
+
+const obtenerColorTag = (nombre) => {
+  return MAPA_COLORES_SKILLS[nombre] || "neutro";
+};
+
+const crearTags = (tags) =>
+  tags.map((t) => `<span class="tag tag-${obtenerColorTag(t)}">${t}</span>`).join("");
 
 let indiceActivo = 0;
 const carruselViewport  = document.getElementById("carrusel-viewport");
@@ -306,9 +412,9 @@ function renderizarProyectos() {
              aria-label="${i + 1} de ${PROYECTOS.length}: ${p.titulo}">
       <div class="card-col-izq">
         <img src="${p.imagen}" alt="${p.titulo}" loading="lazy" draggable="false" />
-        ${crearEstrellasCard(p.rating)}
       </div>
       <div class="card-col-der">
+        ${crearEstrellasCard(p.rating)}
         <h3>${p.titulo}</h3>
         <p class="subtitulo">${p.subtitulo}</p>
         <p class="descripcion">${p.descripcion}</p>
@@ -322,7 +428,7 @@ function renderizarProyectos() {
     if (hasMovedSignificant) {
       e.preventDefault();
       e.stopPropagation();
-      setTimeout(() => { hasMovedSignificant = false; }, 40);
+      hasMovedSignificant = false;
       return;
     }
     const card = e.target.closest(".card");
@@ -373,12 +479,14 @@ function renderizarProyectos() {
 }
 
 /* =========================================================
-   ARRASTRE DEL CARRUSEL (Pointer Events: ratón y táctil)
+   ARRASTRE CONTINUO DEL CARRUSEL (Pointer Events: ratón y táctil)
    ========================================================= */
 let isDragging = false;
 let pointerStartX = 0;
 let pointerStartY = 0;
-let currentDeltaX = 0;
+let lastPointerX = 0;
+let lastPointerTime = 0;
+let velocityX = 0;
 let hasMovedSignificant = false; // > 5px de movimiento
 let isHorizontalDrag = null;
 let baseTargetX = 0;
@@ -394,16 +502,54 @@ function obtenerTargetX(idx) {
   return (viewportW / 2) - (cardLeft + cardW / 2);
 }
 
+function obtenerTranslateXActual() {
+  if (!carruselTrack) return 0;
+  const st = window.getComputedStyle(carruselTrack);
+  const tr = st.transform || st.webkitTransform;
+  if (!tr || tr === "none") return obtenerTargetX(indiceActivo);
+  const match = tr.match(/matrix\(([^)]+)\)/);
+  if (match) {
+    const parts = match[1].split(",");
+    return parseFloat(parts[4]) || 0;
+  }
+  const match3d = tr.match(/matrix3d\(([^)]+)\)/);
+  if (match3d) {
+    const parts = match3d[1].split(",");
+    return parseFloat(parts[12]) || 0;
+  }
+  return obtenerTargetX(indiceActivo);
+}
+
+function actualizarEstadoVisual(idx) {
+  if (!carruselTrack) return;
+  const cards = carruselTrack.querySelectorAll(".card");
+  cards.forEach((card, i) => {
+    const esActivo = i === idx;
+    card.classList.toggle("activo", esActivo);
+    card.setAttribute("tabindex", esActivo ? "0" : "-1");
+    card.setAttribute("aria-selected", esActivo ? "true" : "false");
+  });
+
+  if (carruselPrev) carruselPrev.disabled = idx === 0;
+  if (carruselNext) carruselNext.disabled = idx === cards.length - 1;
+  if (carruselIndicador) carruselIndicador.textContent = `${idx + 1} / ${cards.length}`;
+}
+
 if (carruselViewport) {
+  // Prevenir arrastre nativo no deseado de imágenes
+  carruselViewport.addEventListener("dragstart", (e) => e.preventDefault());
+
   carruselViewport.addEventListener("pointerdown", (e) => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
     isDragging = true;
     pointerStartX = e.clientX;
     pointerStartY = e.clientY;
-    currentDeltaX = 0;
+    lastPointerX = e.clientX;
+    lastPointerTime = performance.now();
+    velocityX = 0;
     hasMovedSignificant = false;
     isHorizontalDrag = null;
-    baseTargetX = obtenerTargetX(indiceActivo);
+    baseTargetX = obtenerTranslateXActual();
   });
 
   window.addEventListener("pointermove", (e) => {
@@ -415,9 +561,12 @@ if (carruselViewport) {
       if (Math.abs(diffX) > 5 || Math.abs(diffY) > 5) {
         if (Math.abs(diffX) >= Math.abs(diffY)) {
           isHorizontalDrag = true;
+          hasMovedSignificant = true;
+          carruselViewport.classList.add("arrastrando");
+          carruselTrack.style.transition = "none";
           try { carruselViewport.setPointerCapture(e.pointerId); } catch (_) {}
         } else {
-          // Gesto vertical: liberar para permitir scroll de página
+          // Gesto vertical: liberar para permitir scroll de página nativo
           isHorizontalDrag = false;
           isDragging = false;
           return;
@@ -431,44 +580,90 @@ if (carruselViewport) {
 
     if (Math.abs(diffX) > 5) {
       hasMovedSignificant = true;
-      carruselViewport.classList.add("arrastrando");
+      if (!carruselViewport.classList.contains("arrastrando")) {
+        carruselViewport.classList.add("arrastrando");
+      }
     }
+
+    // Medición en tiempo real de velocidad para inercia
+    const now = performance.now();
+    const dt = now - lastPointerTime;
+    if (dt > 10) {
+      velocityX = (e.clientX - lastPointerX) / dt; // px / ms
+      lastPointerX = e.clientX;
+      lastPointerTime = now;
+    }
+
+    // Posición continua sin limitar a una sola tarjeta
+    const rawX = baseTargetX + diffX;
+    const maxX = obtenerTargetX(0);
+    const minX = obtenerTargetX(PROYECTOS.length - 1);
 
     // Resistencia elástica en los extremos
-    let delta = diffX;
-    if (indiceActivo === 0 && delta > 0) {
-      delta = delta * 0.28;
-    } else if (indiceActivo === PROYECTOS.length - 1 && delta < 0) {
-      delta = delta * 0.28;
+    let currentX = rawX;
+    if (rawX > maxX) {
+      currentX = maxX + (rawX - maxX) * 0.28;
+    } else if (rawX < minX) {
+      currentX = minX + (rawX - minX) * 0.28;
     }
-    currentDeltaX = delta;
 
     carruselTrack.style.transition = "none";
-    carruselTrack.style.transform = `translateX(${baseTargetX + currentDeltaX}px)`;
+    carruselTrack.style.transform = `translateX(${currentX}px)`;
+
+    // Efecto foco en vivo: actualizar la tarjeta activa más cercana al centro del carrusel
+    let minDiff = Infinity;
+    let closestIdx = indiceActivo;
+    for (let i = 0; i < PROYECTOS.length; i++) {
+      const tx = obtenerTargetX(i);
+      const diff = Math.abs(currentX - tx);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIdx = i;
+      }
+    }
+
+    if (closestIdx !== indiceActivo) {
+      indiceActivo = closestIdx;
+      actualizarEstadoVisual(indiceActivo);
+    }
   });
 
   const finalizarArrastre = (e) => {
-    if (!isDragging && !carruselViewport.classList.contains("arrastrando")) return;
+    if (!isDragging && !hasMovedSignificant) return;
+    const eraArrastre = hasMovedSignificant;
     isDragging = false;
     carruselViewport.classList.remove("arrastrando");
     try { carruselViewport.releasePointerCapture(e.pointerId); } catch (_) {}
 
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    carruselTrack.style.transition = reducedMotion
-      ? "none"
-      : "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)";
+    if (!eraArrastre) return;
 
-    const cards = carruselTrack.querySelectorAll(".card");
-    const cardW = cards[indiceActivo] ? cards[indiceActivo].offsetWidth : 500;
-    const umbral = Math.min(50, cardW * 0.15); // ~50px o ~15% de tarjeta
+    // Mantener hasMovedSignificant para ignorar el click residual posterior al arrastre
+    setTimeout(() => { hasMovedSignificant = false; }, 250);
 
-    if (currentDeltaX < -umbral && indiceActivo < PROYECTOS.length - 1) {
-      irAProyecto(indiceActivo + 1);
-    } else if (currentDeltaX > umbral && indiceActivo > 0) {
-      irAProyecto(indiceActivo - 1);
-    } else {
-      actualizarPosicionCarrusel();
+    // Si el cursor se frenó antes de soltar, anular inercia
+    const timeSinceLastMove = performance.now() - lastPointerTime;
+    if (timeSinceLastMove > 100) {
+      velocityX = 0;
     }
+
+    // Pequeño impulso por inercia según velocidad
+    // velocityX < 0: arrastre hacia la izquierda -> avanzar proyectos (+ índice)
+    // velocityX > 0: arrastre hacia la derecha -> retroceder proyectos (- índice)
+    let impulse = 0;
+    if (velocityX < -1.2) {
+      impulse = 2;
+    } else if (velocityX < -0.3) {
+      impulse = 1;
+    } else if (velocityX > 1.2) {
+      impulse = -2;
+    } else if (velocityX > 0.3) {
+      impulse = -1;
+    }
+
+    let destino = indiceActivo + impulse;
+    destino = Math.max(0, Math.min(PROYECTOS.length - 1, destino));
+
+    irAProyecto(destino);
   };
 
   window.addEventListener("pointerup", finalizarArrastre);
@@ -486,19 +681,16 @@ function actualizarPosicionCarrusel() {
   const cards = carruselTrack.querySelectorAll(".card");
   if (!cards.length) return;
 
-  cards.forEach((card, i) => {
-    const esActivo = i === indiceActivo;
-    card.classList.toggle("activo", esActivo);
-    card.setAttribute("tabindex", esActivo ? "0" : "-1");
-    card.setAttribute("aria-selected", esActivo ? "true" : "false");
-  });
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  carruselTrack.style.transition = reducedMotion
+    ? "none"
+    : "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)";
+  void carruselTrack.offsetWidth;
+
+  actualizarEstadoVisual(indiceActivo);
 
   const targetX = obtenerTargetX(indiceActivo);
   carruselTrack.style.transform = `translateX(${targetX}px)`;
-
-  if (carruselPrev) carruselPrev.disabled = indiceActivo === 0;
-  if (carruselNext) carruselNext.disabled = indiceActivo === cards.length - 1;
-  if (carruselIndicador) carruselIndicador.textContent = `${indiceActivo + 1} / ${cards.length}`;
 }
 
 /* =========================================================
@@ -542,12 +734,95 @@ function abrirModal(i) {
   document.getElementById("modal-resultados").innerHTML =
     p.detalle.resultados.map((r) => `<li>${r}</li>`).join("");
   document.getElementById("modal-tags").innerHTML = crearTags(p.tags);
-  document.getElementById("modal-enlace").href = p.detalle.enlace;
+
+  const enlaceBtn = document.getElementById("modal-enlace");
+  enlaceBtn.href = p.detalle.enlace;
+  enlaceBtn.setAttribute("data-i18n", "modal_link_btn");
+  enlaceBtn.textContent = typeof t === "function" ? t("modal_link_btn") : "Ver repositorio / dashboard";
 
   modal.hidden = false;
   document.body.classList.add("modal-abierto");
   modal.querySelector(".modal-caja").scrollTop = 0;
   modal.querySelector(".modal-cerrar").focus();
+}
+
+function abrirModalKaggle(i) {
+  const k = KAGGLE_COMPETICIONES[i];
+
+  document.getElementById("modal-img").src = k.imagen;
+  document.getElementById("modal-img").alt = k.titulo;
+
+  // En Kaggle mostramos badge de medalla y posición en lugar de rating numérico
+  document.getElementById("modal-rating").innerHTML = `
+    <span class="kaggle-badge" style="font-size:0.78rem; padding: 4px 10px;">${k.badge}</span>
+    <span class="kaggle-tipo" style="font-size:0.8rem;">${k.tipo}</span>
+    <span class="kaggle-posicion" style="font-size:0.84rem; border-top: none; padding-top: 0;">${k.posicion}</span>
+  `;
+
+  document.getElementById("modal-titulo").textContent = k.titulo;
+  document.getElementById("modal-subtitulo").textContent = k.subtitulo;
+  document.getElementById("modal-descripcion").textContent = k.detalle.descripcionLarga;
+  document.getElementById("modal-objetivo").textContent = k.detalle.objetivo;
+  document.getElementById("modal-resultados").innerHTML =
+    k.detalle.resultados.map((r) => `<li>${r}</li>`).join("");
+  document.getElementById("modal-tags").innerHTML = crearTags(k.tags);
+
+  const enlaceBtn = document.getElementById("modal-enlace");
+  enlaceBtn.href = k.enlace;
+  enlaceBtn.removeAttribute("data-i18n");
+  enlaceBtn.textContent = typeof t === "function" && idiomaActual === "en" ? "View competition on Kaggle →" : "Ver competición en Kaggle →";
+
+  modal.hidden = false;
+  document.body.classList.add("modal-abierto");
+  modal.querySelector(".modal-caja").scrollTop = 0;
+  modal.querySelector(".modal-cerrar").focus();
+}
+
+function renderizarKaggle() {
+  const grid = document.getElementById("kaggle-grid");
+  if (!grid) return;
+
+  grid.innerHTML = KAGGLE_COMPETICIONES.map((k, i) => `
+    <article class="tarjeta kaggle-card"
+             tabindex="0"
+             role="button"
+             data-index="${i}"
+             aria-label="Ver detalles de ${k.titulo}">
+      <img class="kaggle-thumb" src="${k.imagen}" alt="Miniatura — ${k.titulo}" loading="lazy" />
+      <div class="kaggle-meta">
+        <span class="kaggle-badge">${k.badge}</span>
+        <span class="kaggle-tipo">${k.tipo}</span>
+      </div>
+      <h3>${k.titulo}</h3>
+      <p class="subtitulo">${k.subtitulo}</p>
+      <p class="descripcion">${k.descripcion || k.detalle.descripcionLarga}</p>
+      <div class="tags">${crearTags(k.tags)}</div>
+      <div class="kaggle-pie">
+        <span class="kaggle-posicion">${k.posicion}</span>
+        <a href="${k.enlace}" target="_blank" rel="noopener" class="enlace-simple kaggle-enlace-ext" aria-label="Ver en Kaggle">Ver en Kaggle &rarr;</a>
+      </div>
+    </article>
+  `).join("");
+
+  /* Clic en tarjeta de Kaggle */
+  grid.addEventListener("click", (e) => {
+    if (e.target.closest(".kaggle-enlace-ext")) return;
+    const card = e.target.closest(".kaggle-card");
+    if (!card) return;
+    const idx = Number(card.dataset.index);
+    abrirModalKaggle(idx);
+  });
+
+  /* Teclado en tarjeta de Kaggle */
+  grid.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      const card = e.target.closest(".kaggle-card");
+      if (!card) return;
+      e.preventDefault();
+      const idx = Number(card.dataset.index);
+      abrirModalKaggle(idx);
+    }
+  });
 }
 
 function cerrarModal() {
@@ -583,6 +858,9 @@ if (typeof aplicarTraducciones === "function") {
 
 /* Renderizar proyectos en el carrusel */
 renderizarProyectos();
+
+/* Renderizar competiciones de Kaggle */
+renderizarKaggle();
 
 /* Mostrar sección inicial según el hash (sin animación en la carga) */
 mostrarSeccion(obtenerHashInicial(), false);
