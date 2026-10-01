@@ -285,10 +285,12 @@ function crearEstrellasCard(rating) {
       </span>`;
   }).join("");
 
+  const labelRating = typeof t === "function" ? t("personal_rating") : "Personal Rating";
+
   return `
     <div class="card-estrellas" aria-label="${val} de 5 estrellas">
       <span class="estrellas-row">${estrellas}</span>
-      <span class="card-rating-label">Personal Rating&nbsp;${val.toFixed(1)}</span>
+      <span class="card-rating-label"><span class="card-rating-title">${labelRating}</span>&nbsp;${val.toFixed(1)}</span>
     </div>`;
 }
 
@@ -302,17 +304,27 @@ function renderizarProyectos() {
              role="group"
              aria-roledescription="slide"
              aria-label="${i + 1} de ${PROYECTOS.length}: ${p.titulo}">
-      <img src="${p.imagen}" alt="${p.titulo}" loading="lazy" />
-      ${crearEstrellasCard(p.rating)}
-      <h3>${p.titulo}</h3>
-      <p class="subtitulo">${p.subtitulo}</p>
-      <p class="descripcion">${p.descripcion}</p>
-      <div class="tags">${crearTags(p.tags)}</div>
+      <div class="card-col-izq">
+        <img src="${p.imagen}" alt="${p.titulo}" loading="lazy" draggable="false" />
+        ${crearEstrellasCard(p.rating)}
+      </div>
+      <div class="card-col-der">
+        <h3>${p.titulo}</h3>
+        <p class="subtitulo">${p.subtitulo}</p>
+        <p class="descripcion">${p.descripcion}</p>
+        <div class="tags">${crearTags(p.tags)}</div>
+      </div>
     </article>
   `).join("");
 
-  /* Clic en tarjetas */
+  /* Clic en tarjetas (distingue entre clic normal y arrastre) */
   carruselTrack.addEventListener("click", (e) => {
+    if (hasMovedSignificant) {
+      e.preventDefault();
+      e.stopPropagation();
+      setTimeout(() => { hasMovedSignificant = false; }, 40);
+      return;
+    }
     const card = e.target.closest(".card");
     if (!card) return;
     const idx = Number(card.dataset.index);
@@ -353,28 +365,114 @@ function renderizarProyectos() {
     if (e.key === "ArrowRight" && indiceActivo < PROYECTOS.length - 1) irAProyecto(indiceActivo + 1);
   });
 
-  /* Swipe táctil */
-  let touchStartX = 0;
-  let touchStartY = 0;
-  carruselViewport.addEventListener("touchstart", (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-    touchStartY = e.changedTouches[0].screenY;
-  }, { passive: true });
-
-  carruselViewport.addEventListener("touchend", (e) => {
-    const diffX = touchStartX - e.changedTouches[0].screenX;
-    const diffY = touchStartY - e.changedTouches[0].screenY;
-    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
-      if (diffX > 0 && indiceActivo < PROYECTOS.length - 1) irAProyecto(indiceActivo + 1);
-      if (diffX < 0 && indiceActivo > 0)                    irAProyecto(indiceActivo - 1);
-    }
-  }, { passive: true });
-
   /* Recalcular al cambiar tamaño de pantalla */
   window.addEventListener("resize", actualizarPosicionCarrusel);
 
   actualizarPosicionCarrusel();
   setTimeout(actualizarPosicionCarrusel, 80);
+}
+
+/* =========================================================
+   ARRASTRE DEL CARRUSEL (Pointer Events: ratón y táctil)
+   ========================================================= */
+let isDragging = false;
+let pointerStartX = 0;
+let pointerStartY = 0;
+let currentDeltaX = 0;
+let hasMovedSignificant = false; // > 5px de movimiento
+let isHorizontalDrag = null;
+let baseTargetX = 0;
+
+function obtenerTargetX(idx) {
+  if (!carruselTrack || !carruselViewport) return 0;
+  const cards = carruselTrack.querySelectorAll(".card");
+  if (!cards.length || !cards[idx]) return 0;
+  const card = cards[idx];
+  const viewportW = carruselViewport.clientWidth;
+  const cardLeft  = card.offsetLeft;
+  const cardW     = card.offsetWidth;
+  return (viewportW / 2) - (cardLeft + cardW / 2);
+}
+
+if (carruselViewport) {
+  carruselViewport.addEventListener("pointerdown", (e) => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    isDragging = true;
+    pointerStartX = e.clientX;
+    pointerStartY = e.clientY;
+    currentDeltaX = 0;
+    hasMovedSignificant = false;
+    isHorizontalDrag = null;
+    baseTargetX = obtenerTargetX(indiceActivo);
+  });
+
+  window.addEventListener("pointermove", (e) => {
+    if (!isDragging) return;
+    const diffX = e.clientX - pointerStartX;
+    const diffY = e.clientY - pointerStartY;
+
+    if (isHorizontalDrag === null) {
+      if (Math.abs(diffX) > 5 || Math.abs(diffY) > 5) {
+        if (Math.abs(diffX) >= Math.abs(diffY)) {
+          isHorizontalDrag = true;
+          try { carruselViewport.setPointerCapture(e.pointerId); } catch (_) {}
+        } else {
+          // Gesto vertical: liberar para permitir scroll de página
+          isHorizontalDrag = false;
+          isDragging = false;
+          return;
+        }
+      } else {
+        return;
+      }
+    }
+
+    if (!isHorizontalDrag) return;
+
+    if (Math.abs(diffX) > 5) {
+      hasMovedSignificant = true;
+      carruselViewport.classList.add("arrastrando");
+    }
+
+    // Resistencia elástica en los extremos
+    let delta = diffX;
+    if (indiceActivo === 0 && delta > 0) {
+      delta = delta * 0.28;
+    } else if (indiceActivo === PROYECTOS.length - 1 && delta < 0) {
+      delta = delta * 0.28;
+    }
+    currentDeltaX = delta;
+
+    carruselTrack.style.transition = "none";
+    carruselTrack.style.transform = `translateX(${baseTargetX + currentDeltaX}px)`;
+  });
+
+  const finalizarArrastre = (e) => {
+    if (!isDragging && !carruselViewport.classList.contains("arrastrando")) return;
+    isDragging = false;
+    carruselViewport.classList.remove("arrastrando");
+    try { carruselViewport.releasePointerCapture(e.pointerId); } catch (_) {}
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    carruselTrack.style.transition = reducedMotion
+      ? "none"
+      : "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)";
+
+    const cards = carruselTrack.querySelectorAll(".card");
+    const cardW = cards[indiceActivo] ? cards[indiceActivo].offsetWidth : 500;
+    const umbral = Math.min(50, cardW * 0.15); // ~50px o ~15% de tarjeta
+
+    if (currentDeltaX < -umbral && indiceActivo < PROYECTOS.length - 1) {
+      irAProyecto(indiceActivo + 1);
+    } else if (currentDeltaX > umbral && indiceActivo > 0) {
+      irAProyecto(indiceActivo - 1);
+    } else {
+      actualizarPosicionCarrusel();
+    }
+  };
+
+  window.addEventListener("pointerup", finalizarArrastre);
+  window.addEventListener("pointercancel", finalizarArrastre);
 }
 
 function irAProyecto(index) {
@@ -395,11 +493,7 @@ function actualizarPosicionCarrusel() {
     card.setAttribute("aria-selected", esActivo ? "true" : "false");
   });
 
-  const cardActiva   = cards[indiceActivo];
-  const viewportW    = carruselViewport.clientWidth;
-  const cardLeft     = cardActiva.offsetLeft;
-  const cardW        = cardActiva.offsetWidth;
-  const targetX      = (viewportW / 2) - (cardLeft + cardW / 2);
+  const targetX = obtenerTargetX(indiceActivo);
   carruselTrack.style.transform = `translateX(${targetX}px)`;
 
   if (carruselPrev) carruselPrev.disabled = indiceActivo === 0;
@@ -427,8 +521,10 @@ function renderizarEstrellas(rating) {
       </span>`;
   }).join("");
 
+  const labelRating = typeof t === "function" ? t("personal_rating") : "Personal Rating";
+
   return `
-    <span class="rating-titulo">Personal Rating</span>
+    <span class="rating-titulo">${labelRating}</span>
     <div class="estrellas" aria-label="${val} de 5 estrellas">${estrellas}</div>
     <span class="rating-numero">${val.toFixed(1)} / 5</span>`;
 }
@@ -469,6 +565,21 @@ document.addEventListener("keydown", (e) => {
    INICIO
    ========================================================= */
 document.getElementById("anio").textContent = new Date().getFullYear();
+
+/* Configuración de selector de idioma */
+const btnLangEn = document.getElementById("lang-en");
+const btnLangEs = document.getElementById("lang-es");
+if (btnLangEn) {
+  btnLangEn.addEventListener("click", () => cambiarIdioma("en"));
+}
+if (btnLangEs) {
+  btnLangEs.addEventListener("click", () => cambiarIdioma("es"));
+}
+
+/* Aplicar traducciones iniciales */
+if (typeof aplicarTraducciones === "function") {
+  aplicarTraducciones();
+}
 
 /* Renderizar proyectos en el carrusel */
 renderizarProyectos();
