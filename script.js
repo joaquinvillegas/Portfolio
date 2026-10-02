@@ -25,21 +25,38 @@ const PROYECTOS = [
     }
   },
   {
-    titulo: "Análisis de Churn de Clientes",
-    subtitulo: "Python · Machine Learning",
+    titulo: "EDA de alojamientos Airbnb en 9 ciudades europeas",
+    subtitulo: "Python · Análisis de datos",
     rating: 4.5, // EDITA: puntuación de 0 a 5
-    descripcion: "Análisis exploratorio y modelo predictivo para identificar clientes con alta probabilidad de abandono en una empresa de telecomunicaciones.",
-    tags: ["Python", "Pandas", "Scikit-learn", "Estadística"],
-    imagen: "images/proyecto-2.svg",
+    descripcion: "Análisis exploratorio de 41.714 alojamientos de Airbnb en nueve ciudades europeas para entender qué factores se asocian al precio y a la satisfacción.",
+    tags: [
+      "Python",
+      "Pandas",
+      "Análisis exploratorio (EDA)",
+      "Visualización de datos",
+      "Plotly",
+      "Estadística",
+      "Análisis de correlaciones"
+    ],
+    imagen: "images/proyecto-airbnb.png",
     detalle: {
-      descripcionLarga: "Limpieza de datos, análisis exploratorio y entrenamiento de un modelo de regresión logística y random forest para predecir el churn a partir de uso, contrato y facturación.",
-      objetivo: "Detectar los factores que más influyen en el abandono y priorizar acciones de retención.",
-      resultados: [
-        "Modelo con AUC de 0.84 en el conjunto de test.",
-        "Los contratos mensuales concentran el 70% del churn.",
-        "Propuesta de campaña de retención para el 10% de clientes de mayor riesgo."
+      descripcionLarga: "Análisis exploratorio de 41.714 alojamientos de Airbnb en Ámsterdam, Atenas, Barcelona, Berlín, Budapest, Lisboa, París, Roma y Viena. Estudia cómo se relacionan precio, ubicación, tipo de alojamiento, limpieza, satisfacción y condición de superhost.",
+      objetivo: "Identificar qué variables se asocian al precio y a la satisfacción de los huéspedes en alojamientos de nueve ciudades europeas. Para el anfitrión, sirve de referencia para fijar el precio y priorizar lo que mejora las valoraciones. Para el huésped, ayuda a entender por qué los precios varían entre ciudades y qué valoraciones conviene mirar.",
+      resumen: [
+        "Partí de 41.714 registros y 19 columnas; descarté 4 (índices de atracciones y de restaurantes) y trabajé con 15 variables. Verifiqué los tipos de datos y los nulos (ninguno). El precio tiene valores extremos (media ≈ 260 €, mediana ≈ 204 €, máximo ≈ 18.545 €), por lo que acoté los ejes de los gráficos.",
+        "El análisis fue univariante (precio medio por ciudad, tipo de habitación, capacidad y distancias), bivariante (precio frente a distancia con regresión OLS, satisfacción frente a limpieza y a tramos de precio, entre semana frente a fin de semana) y multivariante (matrices de correlación y comparación de superhosts con anfitriones normales). Detecté multicolinealidad entre Room Type y Shared Room y expliqué correlaciones aparentemente contradictorias, como la de habitación privada y precio (-0,15).",
+        "Comuniqué los resultados con gráficos de Plotly Express en un notebook y en una presentación de 9 diapositivas."
       ],
-      enlace: "https://github.com/joaquinvillegas/churn-analysis"
+      resultados: [
+        "Ámsterdam tiene el mayor precio medio (≈ 573 €), seguida de París (≈ 393 €); Atenas (≈ 152 €) y Budapest (≈ 177 €) son las más baratas.",
+        "La limpieza es la variable más asociada a la satisfacción, con una relación positiva y fuerte.",
+        "La cercanía al metro y al centro son las variables más asociadas al precio; la del metro pesa más y los precios más altos aparecen a menos de 500 m del metro.",
+        "La satisfacción se concentra por encima de 80 en todos los tramos de precio: no se observa relación entre precio y satisfacción.",
+        "Los superhosts tienen mejor satisfacción y limpieza, un precio medio algo menor y una ubicación ligeramente más alejada del centro.",
+        "La capacidad es la variable de habitación más asociada al precio, aunque la correlación es débil (≈ 0,18).",
+        "El precio no varía de forma apreciable entre semana frente a fin de semana."
+      ],
+      enlace: "" // EDITA: [Enlace a GitHub] · [Enlace a la presentación]
     }
   },
   {
@@ -330,39 +347,62 @@ window.addEventListener("hashchange", () => {
 /* =========================================================
    SKILLS CON COLOR — EDITA AQUÍ EL COLOR DE CADA SKILL
    Colores disponibles: 'amarillo', 'verde', 'azul', 'naranja',
-                        'morado', 'turquesa', 'rojo', 'rosa'
-   Cualquier skill no incluida en el mapa usará el estilo 'neutro'.
+                        'morado', 'turquesa', 'rojo', 'rosa',
+                        'coral', 'indigo', 'lima', 'celeste',
+                        'lavanda', 'menta'
    ========================================================= */
 const MAPA_COLORES_SKILLS = {
-  // EDITA: asignación de skill -> tono de color
+  // Proyectos
   "Power BI": "amarillo",
-  "DAX": "amarillo",
+  "DAX": "naranja",
   "SQL": "azul",
-  "BigQuery": "azul",
+  "BigQuery": "celeste",
   "Python": "verde",
-  "Pandas": "verde",
-  "Scikit-learn": "verde",
-  "Machine Learning": "verde",
+  "Pandas": "naranja",
+  "Análisis exploratorio (EDA)": "turquesa",
+  "Visualización de datos": "azul",
+  "Plotly": "coral",
+  "Estadística": "morado",
+  "Análisis de correlaciones": "rosa",
+  "A/B Testing": "coral",
+  "Cohortes": "turquesa",
+  "Tableau": "azul",
+  "Excel": "lima",
+  "Visualización": "lavanda",
+  "Automatización": "naranja",
+
+  // Kaggle & ML
+  "Machine Learning": "lima",
   "LightGBM": "amarillo",
   "CatBoost": "amarillo",
   "XGBoost": "naranja",
-  "Optuna": "azul",
+  "Optuna": "celeste",
   "Lasso / Ridge": "turquesa",
-  "Feature Engineering": "turquesa",
+  "Feature Engineering": "menta",
   "Time Series": "morado",
-  "Ensemble": "morado",
-  "Excel": "verde",
-  "Tableau": "azul",
-  "Estadística": "morado",
-  "A/B Testing": "morado",
-  "Cohortes": "turquesa",
-  "Visualización": "turquesa",
-  "Automatización": "naranja",
-  "People Analytics": "rosa"
+  "Ensemble": "indigo",
+  "Scikit-learn": "coral",
+
+  // Otras herramientas
+  "People Analytics": "rosa",
+  "MongoDB": "menta",
+  "Big Data": "indigo"
 };
 
+const PALETA_FALLBACK = [
+  "azul", "verde", "morado", "coral", "turquesa",
+  "naranja", "rosa", "celeste", "lavanda", "lima", "amarillo", "indigo", "menta"
+];
+
 const obtenerColorTag = (nombre) => {
-  return MAPA_COLORES_SKILLS[nombre] || "neutro";
+  if (MAPA_COLORES_SKILLS[nombre]) return MAPA_COLORES_SKILLS[nombre];
+  // Si se añade una nueva skill sin asignar, calcula un tono armónico según el texto
+  let hash = 0;
+  for (let i = 0; i < nombre.length; i++) {
+    hash = nombre.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const index = Math.abs(hash) % PALETA_FALLBACK.length;
+  return PALETA_FALLBACK[index];
 };
 
 const crearTags = (tags) =>
@@ -731,14 +771,33 @@ function abrirModal(i) {
   document.getElementById("modal-subtitulo").textContent = p.subtitulo;
   document.getElementById("modal-descripcion").textContent = p.detalle.descripcionLarga;
   document.getElementById("modal-objetivo").textContent = p.detalle.objetivo;
+
+  const resumenSeccion = document.getElementById("modal-resumen-seccion");
+  const resumenEl = document.getElementById("modal-resumen");
+  if (resumenSeccion && resumenEl) {
+    if (p.detalle.resumen && p.detalle.resumen.length) {
+      resumenSeccion.hidden = false;
+      const parrafos = Array.isArray(p.detalle.resumen) ? p.detalle.resumen : [p.detalle.resumen];
+      resumenEl.innerHTML = parrafos.map((txt) => `<p>${txt}</p>`).join("");
+    } else {
+      resumenSeccion.hidden = true;
+      resumenEl.innerHTML = "";
+    }
+  }
+
   document.getElementById("modal-resultados").innerHTML =
     p.detalle.resultados.map((r) => `<li>${r}</li>`).join("");
   document.getElementById("modal-tags").innerHTML = crearTags(p.tags);
 
   const enlaceBtn = document.getElementById("modal-enlace");
-  enlaceBtn.href = p.detalle.enlace;
-  enlaceBtn.setAttribute("data-i18n", "modal_link_btn");
-  enlaceBtn.textContent = typeof t === "function" ? t("modal_link_btn") : "Ver repositorio / dashboard";
+  if (p.detalle.enlace && p.detalle.enlace.trim().startsWith("http")) {
+    enlaceBtn.style.display = "inline-block";
+    enlaceBtn.href = p.detalle.enlace;
+    enlaceBtn.setAttribute("data-i18n", "modal_link_btn");
+    enlaceBtn.textContent = typeof t === "function" ? t("modal_link_btn") : "Ver repositorio / dashboard";
+  } else {
+    enlaceBtn.style.display = "none";
+  }
 
   modal.hidden = false;
   document.body.classList.add("modal-abierto");
@@ -751,6 +810,11 @@ function abrirModalKaggle(i) {
 
   document.getElementById("modal-img").src = k.imagen;
   document.getElementById("modal-img").alt = k.titulo;
+
+  const resumenSeccion = document.getElementById("modal-resumen-seccion");
+  if (resumenSeccion) {
+    resumenSeccion.hidden = true;
+  }
 
   // En Kaggle mostramos badge de medalla y posición en lugar de rating numérico
   document.getElementById("modal-rating").innerHTML = `

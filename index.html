@@ -44,11 +44,11 @@
         <h1 id="about-titulo">Joaquín Villegas</h1>
       </div>
 
-      <p class="cv-intro" data-i18n="cv_intro">
-        Analista de datos enfocado en transformar datos en decisiones. Me apasiona limpiar,
-        modelar y visualizar información para encontrar patrones y contar historias claras
-        con dashboards e informes accionables.
-      </p>
+      <div class="cv-intro" data-i18n="cv_intro">
+        <p>Hi, I’m Joaquín Villegas Cuesta, a Business Administration graduate from Complutense University of Madrid with a Master’s in Business Analytics from Comillas Pontifical University.</p>
+        <p>I’m passionate about data and enjoy using it to understand problems, discover patterns and find insights that can help make better decisions.</p>
+        <p>Through this portfolio, I share some of the data analysis projects I’ve worked on as I continue developing my skills and exploring different ways of working with data.</p>
+      </div>
 
       <p class="cv-disclaimer" data-i18n="cv_disclaimer">
         Puedes encontrar mi perfil más definido y actualizado en mi CV y LinkedIn; esta web está enfocada en mostrar mis proyectos.
@@ -77,28 +77,42 @@
         <div>
           <h3 class="titulo-col" data-i18n="col_education">Educación</h3>
           <ul class="lista">
-            <li data-i18n="edu_1"><strong>Máster en Data Science</strong> — Universidad X, 2023–2024</li>
-            <li data-i18n="edu_2"><strong>Grado en Economía</strong> — Universidad Y, 2018–2022</li>
-            <li data-i18n="edu_3"><strong>Certificación Google Data Analytics</strong> — Coursera, 2023</li>
+            <li class="cv-item" data-i18n="edu_1">
+              <span class="cv-item-titulo">Master's in Business Analytics</span>
+              <span class="cv-item-entidad">Universidad Pontificia Comillas (ICADE)</span>
+              <span class="cv-item-fecha">Oct. 2025 – Jun. 2026</span>
+            </li>
+            <li class="cv-item" data-i18n="edu_2">
+              <span class="cv-item-titulo">Bachelor's in Business Administration (ADE)</span>
+              <span class="cv-item-entidad">Universidad Complutense de Madrid</span>
+              <span class="cv-item-fecha">Sept. 2021 – Jun. 2025</span>
+            </li>
           </ul>
         </div>
         <div>
           <h3 class="titulo-col" data-i18n="col_skills">Herramientas y Skills</h3>
           <ul class="lista">
-            <li data-i18n="skills_1"><strong>SQL</strong> — PostgreSQL, MySQL, BigQuery</li>
-            <li data-i18n="skills_2"><strong>Python</strong> — Pandas, NumPy, Matplotlib, Scikit-learn</li>
-            <li data-i18n="skills_3"><strong>Power BI</strong> — DAX, Power Query, modelado</li>
-            <li data-i18n="skills_4"><strong>Excel</strong> — tablas dinámicas, Power Pivot</li>
-            <li data-i18n="skills_5"><strong>Tableau</strong> — dashboards interactivos</li>
-            <li data-i18n="skills_6"><strong>Estadística</strong> — A/B testing, regresión</li>
+            <li data-i18n="skills_1"><strong>Python</strong></li>
+            <li data-i18n="skills_2"><strong>SQL</strong></li>
+            <li data-i18n="skills_3"><strong>Tableau</strong></li>
+            <li data-i18n="skills_4"><strong>Power BI</strong></li>
+            <li data-i18n="skills_5"><strong>MongoDB</strong></li>
+            <li data-i18n="skills_6"><strong>Big Data</strong></li>
           </ul>
         </div>
         <div>
           <h3 class="titulo-col" data-i18n="col_experience">Experiencia</h3>
           <ul class="lista">
-            <li data-i18n="exp_1"><strong>Data Analyst</strong> — Empresa A, 2024–actualidad. Dashboards de ventas y KPIs.</li>
-            <li data-i18n="exp_2"><strong>Analista Junior</strong> — Empresa B, 2022–2023. Reporting y automatización en Excel/SQL.</li>
-            <li data-i18n="exp_3"><strong>Prácticas BI</strong> — Empresa C, 2022. Limpieza y modelado de datos.</li>
+            <li class="cv-item" data-i18n="exp_1">
+              <span class="cv-item-titulo">Office Clerk / Employee</span>
+              <span class="cv-item-entidad">Ibercaja</span>
+              <span class="cv-item-fecha">Jun. 2025 – Sept. 2025</span>
+            </li>
+            <li class="cv-item" data-i18n="exp_2">
+              <span class="cv-item-titulo">Internship</span>
+              <span class="cv-item-entidad">Ayuntamiento de El Escorial</span>
+              <span class="cv-item-fecha">Feb. 2025 – Jun. 2025</span>
+            </li>
           </ul>
         </div>
       </div>
@@ -205,6 +219,11 @@
 
         <h4 data-i18n="modal_objective_title">Objetivo</h4>
         <p id="modal-objetivo"></p>
+
+        <div id="modal-resumen-seccion">
+          <h4 data-i18n="modal_summary_title">Resumen del proyecto</h4>
+          <div id="modal-resumen"></div>
+        </div>
 
         <h4 data-i18n="modal_results_title">Resultados y conclusiones</h4>
         <ul id="modal-resultados" class="lista"></ul>

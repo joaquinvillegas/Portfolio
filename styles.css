@@ -241,7 +241,19 @@ a { color: inherit; }
   font-weight: 700;
 }
 
-.cv-intro { color: var(--texto-suave); max-width: 720px; margin-bottom: 12px; }
+.cv-intro {
+  color: var(--texto-suave);
+  max-width: 720px;
+  margin-bottom: 18px;
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+.cv-intro p {
+  margin-bottom: 12px;
+}
+.cv-intro p:last-child {
+  margin-bottom: 0;
+}
 
 .cv-disclaimer {
   font-family: var(--fuente);
@@ -305,6 +317,37 @@ a { color: inherit; }
 .lista { list-style: none; font-size: 0.88rem; color: var(--texto-suave); }
 .lista li { margin-bottom: 10px; }
 .lista strong { color: var(--texto); font-weight: 700; }
+
+/* Entradas de Formación y Experiencia en tres líneas */
+.cv-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 22px !important;
+}
+.cv-item:last-child {
+  margin-bottom: 0 !important;
+}
+.cv-item-titulo {
+  font-family: var(--fuente);
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: var(--texto);
+  line-height: 1.35;
+}
+.cv-item-entidad {
+  font-family: var(--fuente);
+  font-size: 0.88rem;
+  color: var(--texto);
+  line-height: 1.35;
+}
+.cv-item-fecha {
+  font-family: var(--fuente);
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #888888;
+  line-height: 1.35;
+}
 
 /* ===== Proyectos — Carrusel Horizontal ===== */
 .proyectos {
@@ -454,6 +497,7 @@ a { color: inherit; }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
   margin: 0;
   border-radius: 0;
@@ -656,6 +700,42 @@ a { color: inherit; }
   background: #fdebf4;
   border: 1px solid #f17db4;
   color: #8e155b;
+}
+
+.tag-coral {
+  background: #fff1ed;
+  border: 1px solid #ff9780;
+  color: #a72d13;
+}
+
+.tag-indigo {
+  background: #eef2ff;
+  border: 1px solid #8ba0f8;
+  color: #312e81;
+}
+
+.tag-lima {
+  background: #f4fae6;
+  border: 1px solid #a3db3b;
+  color: #48690e;
+}
+
+.tag-celeste {
+  background: #eaf7fd;
+  border: 1px solid #63c4f7;
+  color: #03659c;
+}
+
+.tag-lavanda {
+  background: #fbf2ff;
+  border: 1px solid #d48df5;
+  color: #7b1fa2;
+}
+
+.tag-menta {
+  background: #e6faf5;
+  border: 1px solid #4ed6b6;
+  color: #0b6b57;
 }
 
 .tag-neutro {
@@ -896,6 +976,7 @@ a { color: inherit; }
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
+  object-position: center;
   border-radius: 20px;
   display: block;
 }
@@ -982,6 +1063,13 @@ a { color: inherit; }
 }
 .modal-cuerpo p { font-size: 0.92rem; color: var(--texto-suave); }
 .modal-cuerpo .subtitulo { margin-bottom: 12px; }
+
+#modal-resumen p {
+  margin-bottom: 12px;
+}
+#modal-resumen p:last-child {
+  margin-bottom: 0;
+}
 
 .modal-skills { margin-top: 20px; }
 .modal-skills h4 {
@@ -1083,6 +1171,7 @@ a { color: inherit; }
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     border-radius: 0;
   }
   .card-col-der {

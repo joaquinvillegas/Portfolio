@@ -12,34 +12,33 @@ const TRANSLATIONS = {
 
     // CV / About Me
     cv_tag: "CV",
-    cv_intro: "Data analyst focused on turning data into decisions. Passionate about cleaning, modeling, and visualizing information to uncover patterns and tell clear stories with actionable dashboards and reports.",
+    cv_intro: "<p>Hi, I’m Joaquín Villegas Cuesta, a Business Administration graduate from Complutense University of Madrid with a Master’s in Business Analytics from Comillas Pontifical University.</p><p>I’m passionate about data and enjoy using it to understand problems, discover patterns and find insights that can help make better decisions.</p><p>Through this portfolio, I share some of the data analysis projects I’ve worked on as I continue developing my skills and exploring different ways of working with data.</p>",
     cv_disclaimer: "You can find my most detailed and up-to-date profile on my CV and LinkedIn; this website is focused on showcasing my projects.",
     cv_location: "Madrid, Spain",
 
     // CV Columns
     col_education: "Education",
-    edu_1: "<strong>Master's in Data Science</strong> — University X, 2023–2024",
-    edu_2: "<strong>Bachelor's in Economics</strong> — University Y, 2018–2022",
-    edu_3: "<strong>Google Data Analytics Certificate</strong> — Coursera, 2023",
+    edu_1: "<span class=\"cv-item-titulo\">Master's in Business Analytics</span><span class=\"cv-item-entidad\">Universidad Pontificia Comillas (ICADE)</span><span class=\"cv-item-fecha\">Oct. 2025 – Jun. 2026</span>",
+    edu_2: "<span class=\"cv-item-titulo\">Bachelor's in Business Administration (ADE)</span><span class=\"cv-item-entidad\">Universidad Complutense de Madrid</span><span class=\"cv-item-fecha\">Sept. 2021 – Jun. 2025</span>",
 
     col_skills: "Tools & Skills",
-    skills_1: "<strong>SQL</strong> — PostgreSQL, MySQL, BigQuery",
-    skills_2: "<strong>Python</strong> — Pandas, NumPy, Matplotlib, Scikit-learn",
-    skills_3: "<strong>Power BI</strong> — DAX, Power Query, modeling",
-    skills_4: "<strong>Excel</strong> — pivot tables, Power Pivot",
-    skills_5: "<strong>Tableau</strong> — interactive dashboards",
-    skills_6: "<strong>Statistics</strong> — A/B testing, regression",
+    skills_1: "<strong>Python</strong>",
+    skills_2: "<strong>SQL</strong>",
+    skills_3: "<strong>Tableau</strong>",
+    skills_4: "<strong>Power BI</strong>",
+    skills_5: "<strong>MongoDB</strong>",
+    skills_6: "<strong>Big Data</strong>",
 
     col_experience: "Experience",
-    exp_1: "<strong>Data Analyst</strong> — Company A, 2024–present. Sales dashboards and KPIs.",
-    exp_2: "<strong>Junior Analyst</strong> — Company B, 2022–2023. Reporting and automation in Excel/SQL.",
-    exp_3: "<strong>BI Internship</strong> — Company C, 2022. Data cleaning and modeling.",
+    exp_1: "<span class=\"cv-item-titulo\">Office Clerk / Employee</span><span class=\"cv-item-entidad\">Ibercaja</span><span class=\"cv-item-fecha\">Jun. 2025 – Sept. 2025</span>",
+    exp_2: "<span class=\"cv-item-titulo\">Internship</span><span class=\"cv-item-entidad\">Ayuntamiento de El Escorial</span><span class=\"cv-item-fecha\">Feb. 2025 – Jun. 2025</span>",
 
     // Interface & Modal Labels
     personal_rating: "Personal Rating",
     carrusel_prev_aria: "Previous project",
     carrusel_next_aria: "Next project",
     modal_objective_title: "Objective",
+    modal_summary_title: "Project Summary",
     modal_results_title: "Results & Conclusions",
     modal_skills_title: "Skills",
     modal_link_btn: "View repository / dashboard",
@@ -56,34 +55,33 @@ const TRANSLATIONS = {
 
     // CV / About Me
     cv_tag: "CV",
-    cv_intro: "Analista de datos enfocado en transformar datos en decisiones. Me apasiona limpiar, modelar y visualizar información para encontrar patrones y contar historias claras con dashboards e informes accionables.",
+    cv_intro: "<p>Hola, soy Joaquín Villegas Cuesta, graduado en Administración y Dirección de Empresas por la Universidad Complutense de Madrid con un Máster en Business Analytics por la Universidad Pontificia Comillas.</p><p>Me apasionan los datos y disfruto utilizándolos para comprender problemas, descubrir patrones y encontrar insights que ayuden a tomar mejores decisiones.</p><p>A través de este portfolio, comparto algunos de los proyectos de análisis de datos en los que he trabajado mientras continúo desarrollando mis habilidades y explorando diferentes formas de trabajar con datos.</p>",
     cv_disclaimer: "Puedes encontrar mi perfil más definido y actualizado en mi CV y LinkedIn; esta web está enfocada en mostrar mis proyectos.",
     cv_location: "Madrid, España",
 
     // CV Columnas
     col_education: "Educación",
-    edu_1: "<strong>Máster en Data Science</strong> — Universidad X, 2023–2024",
-    edu_2: "<strong>Grado en Economía</strong> — Universidad Y, 2018–2022",
-    edu_3: "<strong>Certificación Google Data Analytics</strong> — Coursera, 2023",
+    edu_1: "<span class=\"cv-item-titulo\">Máster en Business Analytics</span><span class=\"cv-item-entidad\">Universidad Pontificia Comillas (ICADE)</span><span class=\"cv-item-fecha\">Oct. 2025 – Jun. 2026</span>",
+    edu_2: "<span class=\"cv-item-titulo\">Grado en Administración y Dirección de Empresas (ADE)</span><span class=\"cv-item-entidad\">Universidad Complutense de Madrid</span><span class=\"cv-item-fecha\">Sept. 2021 – Jun. 2025</span>",
 
     col_skills: "Herramientas y Skills",
-    skills_1: "<strong>SQL</strong> — PostgreSQL, MySQL, BigQuery",
-    skills_2: "<strong>Python</strong> — Pandas, NumPy, Matplotlib, Scikit-learn",
-    skills_3: "<strong>Power BI</strong> — DAX, Power Query, modelado",
-    skills_4: "<strong>Excel</strong> — tablas dinámicas, Power Pivot",
-    skills_5: "<strong>Tableau</strong> — dashboards interactivos",
-    skills_6: "<strong>Estadística</strong> — A/B testing, regresión",
+    skills_1: "<strong>Python</strong>",
+    skills_2: "<strong>SQL</strong>",
+    skills_3: "<strong>Tableau</strong>",
+    skills_4: "<strong>Power BI</strong>",
+    skills_5: "<strong>MongoDB</strong>",
+    skills_6: "<strong>Big Data</strong>",
 
     col_experience: "Experiencia",
-    exp_1: "<strong>Data Analyst</strong> — Empresa A, 2024–actualidad. Dashboards de ventas y KPIs.",
-    exp_2: "<strong>Analista Junior</strong> — Empresa B, 2022–2023. Reporting y automatización en Excel/SQL.",
-    exp_3: "<strong>Prácticas BI</strong> — Empresa C, 2022. Limpieza y modelado de datos.",
+    exp_1: "<span class=\"cv-item-titulo\">Empleado de oficina</span><span class=\"cv-item-entidad\">Ibercaja</span><span class=\"cv-item-fecha\">Jun. 2025 – Sept. 2025</span>",
+    exp_2: "<span class=\"cv-item-titulo\">Prácticas</span><span class=\"cv-item-entidad\">Ayuntamiento de El Escorial</span><span class=\"cv-item-fecha\">Feb. 2025 – Jun. 2025</span>",
 
     // Interface & Modal Labels
     personal_rating: "Personal Rating",
     carrusel_prev_aria: "Proyecto anterior",
     carrusel_next_aria: "Siguiente proyecto",
     modal_objective_title: "Objetivo",
+    modal_summary_title: "Resumen del proyecto",
     modal_results_title: "Resultados y conclusiones",
     modal_skills_title: "Skills",
     modal_link_btn: "Ver repositorio / dashboard",
