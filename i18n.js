@@ -43,6 +43,7 @@ const TRANSLATIONS = {
     modal_skills_title: "Skills",
     modal_link_btn: "View repository / dashboard",
     kaggle_profile_btn: "View Kaggle profile",
+    kaggle_view_link: "View on Kaggle →",
 
     // Footer
     footer_rights: "All rights reserved."
@@ -86,6 +87,7 @@ const TRANSLATIONS = {
     modal_skills_title: "Skills",
     modal_link_btn: "Ver repositorio / dashboard",
     kaggle_profile_btn: "Ver perfil en Kaggle",
+    kaggle_view_link: "Ver en Kaggle →",
 
     // Footer
     footer_rights: "Todos los derechos reservados."

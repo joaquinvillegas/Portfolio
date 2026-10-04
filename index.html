@@ -158,7 +158,21 @@
         </a>
       </div>
 
-      <div class="kaggle-grid" id="kaggle-grid"></div>
+      <div class="carrusel-viewport" id="carrusel-viewport-kaggle" tabindex="0"
+           aria-label="Carrusel de competiciones Kaggle" role="region">
+        <div class="carrusel-track" id="carrusel-track-kaggle"></div>
+      </div>
+
+      <!-- Flechas debajo del carrusel, centradas -->
+      <div class="carrusel-controles" aria-label="Controles del carrusel de Kaggle">
+        <button class="carrusel-btn" id="carrusel-prev-kaggle" aria-label="Competición anterior" data-i18n-aria="carrusel_prev_aria" disabled>
+          <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="carrusel-indicador" id="carrusel-indicador-kaggle" aria-live="polite">1 / 3</span>
+        <button class="carrusel-btn" id="carrusel-next-kaggle" aria-label="Siguiente competición" data-i18n-aria="carrusel_next_aria">
+          <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
     </section>
 
   </main>

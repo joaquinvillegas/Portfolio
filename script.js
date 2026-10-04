@@ -27,7 +27,7 @@ const PROYECTOS = [
   {
     titulo: "EDA de alojamientos Airbnb en 9 ciudades europeas",
     subtitulo: "Python · Análisis de datos",
-    rating: 4.5, // EDITA: puntuación de 0 a 5
+    rating: 4.0, // EDITA: puntuación de 0 a 5
     descripcion: "Análisis exploratorio de 41.714 alojamientos de Airbnb en nueve ciudades europeas para entender qué factores se asocian al precio y a la satisfacción.",
     tags: [
       "Python",
@@ -44,8 +44,7 @@ const PROYECTOS = [
       objetivo: "Identificar qué variables se asocian al precio y a la satisfacción de los huéspedes en alojamientos de nueve ciudades europeas. Para el anfitrión, sirve de referencia para fijar el precio y priorizar lo que mejora las valoraciones. Para el huésped, ayuda a entender por qué los precios varían entre ciudades y qué valoraciones conviene mirar.",
       resumen: [
         "Partí de 41.714 registros y 19 columnas; descarté 4 (índices de atracciones y de restaurantes) y trabajé con 15 variables. Verifiqué los tipos de datos y los nulos (ninguno). El precio tiene valores extremos (media ≈ 260 €, mediana ≈ 204 €, máximo ≈ 18.545 €), por lo que acoté los ejes de los gráficos.",
-        "El análisis fue univariante (precio medio por ciudad, tipo de habitación, capacidad y distancias), bivariante (precio frente a distancia con regresión OLS, satisfacción frente a limpieza y a tramos de precio, entre semana frente a fin de semana) y multivariante (matrices de correlación y comparación de superhosts con anfitriones normales). Detecté multicolinealidad entre Room Type y Shared Room y expliqué correlaciones aparentemente contradictorias, como la de habitación privada y precio (-0,15).",
-        "Comuniqué los resultados con gráficos de Plotly Express en un notebook y en una presentación de 9 diapositivas."
+        "El análisis fue univariante (precio medio por ciudad, tipo de habitación, capacidad y distancias), bivariante (precio frente a distancia con regresión OLS, satisfacción frente a limpieza y a tramos de precio, entre semana frente a fin de semana) y multivariante (matrices de correlación y comparación de superhosts con anfitriones normales). Detecté multicolinealidad entre Room Type y Shared Room y expliqué correlaciones aparentemente contradictorias, como la de habitación privada y precio (-0,15)."
       ],
       resultados: [
         "Ámsterdam tiene el mayor precio medio (≈ 573 €), seguida de París (≈ 393 €); Atenas (≈ 152 €) y Budapest (≈ 177 €) son las más baratas.",
@@ -60,21 +59,38 @@ const PROYECTOS = [
     }
   },
   {
-    titulo: "Análisis de Datos de E-commerce",
-    subtitulo: "SQL · BigQuery",
-    rating: 4.0, // EDITA: puntuación de 0 a 5
-    descripcion: "Consultas SQL avanzadas para analizar el embudo de conversión, la retención por cohortes y el valor de vida del cliente.",
-    tags: ["SQL", "BigQuery", "Cohortes"],
+    titulo: "Predicción de impago en tarjetas de crédito con ML supervisado",
+    subtitulo: "Python · Machine Learning",
+    rating: 3.5, // EDITA: puntuación de 0 a 5
+    descripcion: "Análisis de 25.134 clientes de tarjetas de crédito del dataset Credit Card Approval Prediction (Kaggle), que integra solicitudes e historial mensual de pagos. Estudia qué características se asocian a haber tenido un retraso de más de 30 días en algún pago.",
+    tags: [
+      "Python",
+      "Pandas",
+      "Scikit-learn",
+      "Statsmodels",
+      "Matplotlib",
+      "Seaborn",
+      "Plotly",
+      "Machine Learning supervisado"
+    ],
     imagen: "images/proyecto-3.svg",
     detalle: {
-      descripcionLarga: "Uso de CTEs y funciones ventana sobre un dataset público de e-commerce para calcular métricas de conversión, retención mensual por cohortes y LTV.",
-      objetivo: "Entender en qué punto del embudo se pierden más usuarios y cómo evoluciona la retención.",
-      resultados: [
-        "La mayor caída del embudo se produce entre carrito y pago (-58%).",
-        "La retención al tercer mes ronda el 18%.",
-        "Consultas documentadas y reutilizables."
+      descripcionLarga: "Análisis de 25.134 clientes de tarjetas de crédito del dataset Credit Card Approval Prediction (Kaggle), que integra solicitudes e historial mensual de pagos. Estudia qué características se asocian a haber tenido un retraso de más de 30 días en algún pago.",
+      objetivo: "Predecir qué clientes incumplirán algún pago con más de 30 días de retraso y comparar modelos para detectarlos. Sirve a las entidades de crédito para priorizar revisiones manuales, pedir garantías o solicitar más información antes de conceder crédito.",
+      resumen: [
+        "Partí de 438.557 solicitudes con 18 columnas y de un historial mensual de 1.048.575 registros. Eliminé 134.203 filas sin ocupación, porque al ser categórica no se podía imputar, y acoté ingresos y años trabajados con la regla del rango intercuartílico. Construí la variable de impago (retraso de más de 30 días) a partir del historial y la uní por cliente, con lo que quedaron 25.134 clientes y un 12,3 % de impagos.",
+        "Ajusté un logit explicativo con Statsmodels y entrené un logit, un Random Forest y una red neuronal con Scikit-learn. El principal problema fue el desbalanceo de la variable objetivo, que abordé con pesos de clase y ajuste del umbral para maximizar la detección de impagos. Limité el sobreajuste con búsqueda aleatoria de hiperparámetros, validación cruzada, early stopping y regularización L2. En el Random Forest persistió en parte."
       ],
-      enlace: "https://github.com/joaquinvillegas/ecommerce-sql"
+      resultados: [
+        "El Random Forest es el mejor modelo: detecta el 79 % de los impagos en test, con umbral de 0,35.",
+        "Su AUC en test es 0,72 frente a 0,92 en entrenamiento, lo que indica un sobreajuste que no se eliminó del todo.",
+        "Su precisión es del 17 %: de cada 100 clientes marcados como impago, solo 17 lo son, por las muchas falsas alarmas.",
+        "La red neuronal queda por detrás, con un AUC de 0,62 en test, por el tamaño reducido y el desbalanceo del dataset.",
+        "El logit predictivo apenas supera el azar (AUC ≈ 0,54), porque no captura relaciones no lineales.",
+        "El logit explicativo tiene un pseudo R² de 0,005: los ingresos y el resto de variables explican muy poco el impago.",
+        "Ningún modelo supera la regla de la mayoría (87,7 % de accuracy): la exactitud de 36-54 % es el coste de priorizar el recall."
+      ],
+      enlace: ""
     }
   },
   {
@@ -319,9 +335,11 @@ function mostrarSeccion(id, animate) {
     });
   }
 
-  // Si abrimos Projects: recalcular posición del carrusel
+  // Si abrimos Projects o Kaggle: recalcular posición del carrusel
   if (id === "projects") {
     setTimeout(actualizarPosicionCarrusel, 50);
+  } else if (id === "kaggle") {
+    setTimeout(actualizarPosicionCarruselKaggle, 50);
   }
 }
 
@@ -366,6 +384,11 @@ const MAPA_COLORES_SKILLS = {
   "Análisis de correlaciones": "rosa",
   "A/B Testing": "coral",
   "Cohortes": "turquesa",
+  "Clasificación": "morado",
+  "Statsmodels": "morado",
+  "Matplotlib": "azul",
+  "Seaborn": "celeste",
+  "Machine Learning supervisado": "lima",
   "Tableau": "azul",
   "Excel": "lima",
   "Visualización": "lavanda",
@@ -405,15 +428,14 @@ const obtenerColorTag = (nombre) => {
   return PALETA_FALLBACK[index];
 };
 
-const crearTags = (tags) =>
-  tags.map((t) => `<span class="tag tag-${obtenerColorTag(t)}">${t}</span>`).join("");
-
-let indiceActivo = 0;
-const carruselViewport  = document.getElementById("carrusel-viewport");
-const carruselTrack     = document.getElementById("carrusel-track");
-const carruselPrev      = document.getElementById("carrusel-prev");
-const carruselNext      = document.getElementById("carrusel-next");
-const carruselIndicador = document.getElementById("carrusel-indicador");
+const crearTags = (tags, colorOverrides = {}) =>
+  tags.map((t) => {
+    const nombre = typeof t === "object" && t !== null ? t.nombre : t;
+    const color = (typeof t === "object" && t !== null && t.color)
+      ? t.color
+      : (colorOverrides[nombre] || obtenerColorTag(nombre));
+    return `<span class="tag tag-${color}">${nombre}</span>`;
+  }).join("");
 
 /* Genera HTML de estrellas para la tarjeta del carrusel (sobrias, gris/negro) */
 function crearEstrellasCard(rating) {
@@ -440,12 +462,10 @@ function crearEstrellasCard(rating) {
     </div>`;
 }
 
-function renderizarProyectos() {
-  if (!carruselTrack) return;
-
-  carruselTrack.innerHTML = PROYECTOS.map((p, i) => `
-    <article class="card ${i === 0 ? "activo" : ""}"
-             tabindex="${i === 0 ? "0" : "-1"}"
+function renderCardProyecto(p, i, esActivo) {
+  return `
+    <article class="card ${esActivo ? "activo" : ""}"
+             tabindex="${esActivo ? "0" : "-1"}"
              data-index="${i}"
              role="group"
              aria-roledescription="slide"
@@ -458,128 +478,180 @@ function renderizarProyectos() {
         <h3>${p.titulo}</h3>
         <p class="subtitulo">${p.subtitulo}</p>
         <p class="descripcion">${p.descripcion}</p>
-        <div class="tags">${crearTags(p.tags)}</div>
+        <div class="tags">${crearTags(p.tags, p.tagColors)}</div>
       </div>
     </article>
-  `).join("");
+  `;
+}
 
-  /* Clic en tarjetas (distingue entre clic normal y arrastre) */
-  carruselTrack.addEventListener("click", (e) => {
-    if (hasMovedSignificant) {
-      e.preventDefault();
-      e.stopPropagation();
-      hasMovedSignificant = false;
-      return;
-    }
-    const card = e.target.closest(".card");
-    if (!card) return;
-    const idx = Number(card.dataset.index);
-    if (idx === indiceActivo) {
-      abrirModal(idx);
-    } else {
-      irAProyecto(idx);
-    }
-  });
-
-  /* Teclado en tarjeta activa */
-  carruselTrack.addEventListener("keydown", (e) => {
-    const card = e.target.closest(".card");
-    if (!card) return;
-    const idx = Number(card.dataset.index);
-    if ((e.key === "Enter" || e.key === " ") && idx === indiceActivo) {
-      e.preventDefault();
-      abrirModal(idx);
-    }
-  });
-
-  /* Botones de navegación */
-  if (carruselPrev) {
-    carruselPrev.addEventListener("click", () => {
-      if (indiceActivo > 0) irAProyecto(indiceActivo - 1);
-    });
-  }
-  if (carruselNext) {
-    carruselNext.addEventListener("click", () => {
-      if (indiceActivo < PROYECTOS.length - 1) irAProyecto(indiceActivo + 1);
-    });
-  }
-
-  /* Flechas de teclado (← →) — solo cuando no hay modal abierto */
-  window.addEventListener("keydown", (e) => {
-    if (modal && !modal.hidden) return;
-    if (e.key === "ArrowLeft"  && indiceActivo > 0)                   irAProyecto(indiceActivo - 1);
-    if (e.key === "ArrowRight" && indiceActivo < PROYECTOS.length - 1) irAProyecto(indiceActivo + 1);
-  });
-
-  /* Recalcular al cambiar tamaño de pantalla */
-  window.addEventListener("resize", actualizarPosicionCarrusel);
-
-  actualizarPosicionCarrusel();
-  setTimeout(actualizarPosicionCarrusel, 80);
+function renderCardKaggle(k, i, esActivo) {
+  const labelVer = typeof t === "function" ? t("kaggle_view_link") : "Ver en Kaggle &rarr;";
+  return `
+    <article class="card kaggle-card ${esActivo ? "activo" : ""}"
+             tabindex="${esActivo ? "0" : "-1"}"
+             data-index="${i}"
+             role="group"
+             aria-roledescription="slide"
+             aria-label="${i + 1} de ${KAGGLE_COMPETICIONES.length}: ${k.titulo}">
+      <img class="kaggle-thumb" src="${k.imagen}" alt="Miniatura — ${k.titulo}" loading="lazy" draggable="false" />
+      <div class="kaggle-meta">
+        <span class="kaggle-badge">${k.badge}</span>
+        <span class="kaggle-tipo">${k.tipo}</span>
+      </div>
+      <h3>${k.titulo}</h3>
+      <p class="subtitulo">${k.subtitulo}</p>
+      <p class="descripcion">${k.descripcion || k.detalle.descripcionLarga}</p>
+      <div class="tags">${crearTags(k.tags)}</div>
+      <div class="kaggle-pie">
+        <span class="kaggle-posicion">${k.posicion}</span>
+        <a href="${k.enlace}" target="_blank" rel="noopener" class="enlace-simple kaggle-enlace-ext" aria-label="Ver en Kaggle" data-i18n="kaggle_view_link">${labelVer}</a>
+      </div>
+    </article>
+  `;
 }
 
 /* =========================================================
-   ARRASTRE CONTINUO DEL CARRUSEL (Pointer Events: ratón y táctil)
+   FÁBRICA DE CARRUSELES CON EFECTO FOCO Y GESTOS TÁCTILES
    ========================================================= */
-let isDragging = false;
-let pointerStartX = 0;
-let pointerStartY = 0;
-let lastPointerX = 0;
-let lastPointerTime = 0;
-let velocityX = 0;
-let hasMovedSignificant = false; // > 5px de movimiento
-let isHorizontalDrag = null;
-let baseTargetX = 0;
+function crearCarrusel({
+  viewport,
+  track,
+  prevBtn,
+  nextBtn,
+  indicador,
+  items,
+  renderCard,
+  onOpenModal
+}) {
+  if (!viewport || !track) return null;
 
-function obtenerTargetX(idx) {
-  if (!carruselTrack || !carruselViewport) return 0;
-  const cards = carruselTrack.querySelectorAll(".card");
-  if (!cards.length || !cards[idx]) return 0;
-  const card = cards[idx];
-  const viewportW = carruselViewport.clientWidth;
-  const cardLeft  = card.offsetLeft;
-  const cardW     = card.offsetWidth;
-  return (viewportW / 2) - (cardLeft + cardW / 2);
-}
+  let indiceActivo = 0;
+  let isDragging = false;
+  let pointerStartX = 0;
+  let pointerStartY = 0;
+  let lastPointerX = 0;
+  let lastPointerTime = 0;
+  let velocityX = 0;
+  let hasMovedSignificant = false;
+  let isHorizontalDrag = null;
+  let baseTargetX = 0;
 
-function obtenerTranslateXActual() {
-  if (!carruselTrack) return 0;
-  const st = window.getComputedStyle(carruselTrack);
-  const tr = st.transform || st.webkitTransform;
-  if (!tr || tr === "none") return obtenerTargetX(indiceActivo);
-  const match = tr.match(/matrix\(([^)]+)\)/);
-  if (match) {
-    const parts = match[1].split(",");
-    return parseFloat(parts[4]) || 0;
+  function obtenerTargetX(idx) {
+    const cards = track.querySelectorAll(".card");
+    if (!cards.length || !cards[idx]) return 0;
+    const card = cards[idx];
+    const viewportW = viewport.clientWidth;
+    const cardLeft  = card.offsetLeft;
+    const cardW     = card.offsetWidth;
+    return (viewportW / 2) - (cardLeft + cardW / 2);
   }
-  const match3d = tr.match(/matrix3d\(([^)]+)\)/);
-  if (match3d) {
-    const parts = match3d[1].split(",");
-    return parseFloat(parts[12]) || 0;
+
+  function obtenerTranslateXActual() {
+    const st = window.getComputedStyle(track);
+    const tr = st.transform || st.webkitTransform;
+    if (!tr || tr === "none") return obtenerTargetX(indiceActivo);
+    const match = tr.match(/matrix\(([^)]+)\)/);
+    if (match) {
+      const parts = match[1].split(",");
+      return parseFloat(parts[4]) || 0;
+    }
+    const match3d = tr.match(/matrix3d\(([^)]+)\)/);
+    if (match3d) {
+      const parts = match3d[1].split(",");
+      return parseFloat(parts[12]) || 0;
+    }
+    return obtenerTargetX(indiceActivo);
   }
-  return obtenerTargetX(indiceActivo);
-}
 
-function actualizarEstadoVisual(idx) {
-  if (!carruselTrack) return;
-  const cards = carruselTrack.querySelectorAll(".card");
-  cards.forEach((card, i) => {
-    const esActivo = i === idx;
-    card.classList.toggle("activo", esActivo);
-    card.setAttribute("tabindex", esActivo ? "0" : "-1");
-    card.setAttribute("aria-selected", esActivo ? "true" : "false");
-  });
+  function actualizarEstadoVisual(idx) {
+    const cards = track.querySelectorAll(".card");
+    cards.forEach((card, i) => {
+      const esActivo = i === idx;
+      card.classList.toggle("activo", esActivo);
+      card.setAttribute("tabindex", esActivo ? "0" : "-1");
+      card.setAttribute("aria-selected", esActivo ? "true" : "false");
+    });
 
-  if (carruselPrev) carruselPrev.disabled = idx === 0;
-  if (carruselNext) carruselNext.disabled = idx === cards.length - 1;
-  if (carruselIndicador) carruselIndicador.textContent = `${idx + 1} / ${cards.length}`;
-}
+    if (prevBtn) prevBtn.disabled = idx === 0;
+    if (nextBtn) nextBtn.disabled = idx === cards.length - 1;
+    if (indicador) indicador.textContent = `${idx + 1} / ${cards.length}`;
+  }
 
-if (carruselViewport) {
+  function actualizarPosicion() {
+    const cards = track.querySelectorAll(".card");
+    if (!cards.length) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    track.style.transition = reducedMotion
+      ? "none"
+      : "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)";
+    void track.offsetWidth;
+
+    actualizarEstadoVisual(indiceActivo);
+
+    const targetX = obtenerTargetX(indiceActivo);
+    track.style.transform = `translateX(${targetX}px)`;
+  }
+
+  function irA(index) {
+    if (index < 0 || index >= items.length) return;
+    indiceActivo = index;
+    actualizarPosicion();
+  }
+
+  function render() {
+    track.innerHTML = items.map((item, i) => renderCard(item, i, i === indiceActivo)).join("");
+
+    /* Clic en tarjetas (distingue entre clic normal y arrastre) */
+    track.addEventListener("click", (e) => {
+      if (e.target.closest(".kaggle-enlace-ext")) return;
+      if (hasMovedSignificant) {
+        e.preventDefault();
+        e.stopPropagation();
+        hasMovedSignificant = false;
+        return;
+      }
+      const card = e.target.closest(".card");
+      if (!card) return;
+      const idx = Number(card.dataset.index);
+      if (idx === indiceActivo) {
+        onOpenModal(idx);
+      } else {
+        irA(idx);
+      }
+    });
+
+    /* Teclado en tarjeta activa */
+    track.addEventListener("keydown", (e) => {
+      const card = e.target.closest(".card");
+      if (!card) return;
+      const idx = Number(card.dataset.index);
+      if ((e.key === "Enter" || e.key === " ") && idx === indiceActivo) {
+        e.preventDefault();
+        onOpenModal(idx);
+      }
+    });
+
+    /* Botones de navegación */
+    if (prevBtn) {
+      prevBtn.addEventListener("click", () => {
+        if (indiceActivo > 0) irA(indiceActivo - 1);
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener("click", () => {
+        if (indiceActivo < items.length - 1) irA(indiceActivo + 1);
+      });
+    }
+
+    actualizarPosicion();
+    setTimeout(actualizarPosicion, 80);
+  }
+
   // Prevenir arrastre nativo no deseado de imágenes
-  carruselViewport.addEventListener("dragstart", (e) => e.preventDefault());
+  viewport.addEventListener("dragstart", (e) => e.preventDefault());
 
-  carruselViewport.addEventListener("pointerdown", (e) => {
+  viewport.addEventListener("pointerdown", (e) => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
     isDragging = true;
     pointerStartX = e.clientX;
@@ -602,9 +674,9 @@ if (carruselViewport) {
         if (Math.abs(diffX) >= Math.abs(diffY)) {
           isHorizontalDrag = true;
           hasMovedSignificant = true;
-          carruselViewport.classList.add("arrastrando");
-          carruselTrack.style.transition = "none";
-          try { carruselViewport.setPointerCapture(e.pointerId); } catch (_) {}
+          viewport.classList.add("arrastrando");
+          track.style.transition = "none";
+          try { viewport.setPointerCapture(e.pointerId); } catch (_) {}
         } else {
           // Gesto vertical: liberar para permitir scroll de página nativo
           isHorizontalDrag = false;
@@ -620,8 +692,8 @@ if (carruselViewport) {
 
     if (Math.abs(diffX) > 5) {
       hasMovedSignificant = true;
-      if (!carruselViewport.classList.contains("arrastrando")) {
-        carruselViewport.classList.add("arrastrando");
+      if (!viewport.classList.contains("arrastrando")) {
+        viewport.classList.add("arrastrando");
       }
     }
 
@@ -629,7 +701,7 @@ if (carruselViewport) {
     const now = performance.now();
     const dt = now - lastPointerTime;
     if (dt > 10) {
-      velocityX = (e.clientX - lastPointerX) / dt; // px / ms
+      velocityX = (e.clientX - lastPointerX) / dt;
       lastPointerX = e.clientX;
       lastPointerTime = now;
     }
@@ -637,7 +709,7 @@ if (carruselViewport) {
     // Posición continua sin limitar a una sola tarjeta
     const rawX = baseTargetX + diffX;
     const maxX = obtenerTargetX(0);
-    const minX = obtenerTargetX(PROYECTOS.length - 1);
+    const minX = obtenerTargetX(items.length - 1);
 
     // Resistencia elástica en los extremos
     let currentX = rawX;
@@ -647,13 +719,13 @@ if (carruselViewport) {
       currentX = minX + (rawX - minX) * 0.28;
     }
 
-    carruselTrack.style.transition = "none";
-    carruselTrack.style.transform = `translateX(${currentX}px)`;
+    track.style.transition = "none";
+    track.style.transform = `translateX(${currentX}px)`;
 
     // Efecto foco en vivo: actualizar la tarjeta activa más cercana al centro del carrusel
     let minDiff = Infinity;
     let closestIdx = indiceActivo;
-    for (let i = 0; i < PROYECTOS.length; i++) {
+    for (let i = 0; i < items.length; i++) {
       const tx = obtenerTargetX(i);
       const diff = Math.abs(currentX - tx);
       if (diff < minDiff) {
@@ -672,12 +744,11 @@ if (carruselViewport) {
     if (!isDragging && !hasMovedSignificant) return;
     const eraArrastre = hasMovedSignificant;
     isDragging = false;
-    carruselViewport.classList.remove("arrastrando");
-    try { carruselViewport.releasePointerCapture(e.pointerId); } catch (_) {}
+    viewport.classList.remove("arrastrando");
+    try { viewport.releasePointerCapture(e.pointerId); } catch (_) {}
 
     if (!eraArrastre) return;
 
-    // Mantener hasMovedSignificant para ignorar el click residual posterior al arrastre
     setTimeout(() => { hasMovedSignificant = false; }, 250);
 
     // Si el cursor se frenó antes de soltar, anular inercia
@@ -687,8 +758,6 @@ if (carruselViewport) {
     }
 
     // Pequeño impulso por inercia según velocidad
-    // velocityX < 0: arrastre hacia la izquierda -> avanzar proyectos (+ índice)
-    // velocityX > 0: arrastre hacia la derecha -> retroceder proyectos (- índice)
     let impulse = 0;
     if (velocityX < -1.2) {
       impulse = 2;
@@ -701,37 +770,85 @@ if (carruselViewport) {
     }
 
     let destino = indiceActivo + impulse;
-    destino = Math.max(0, Math.min(PROYECTOS.length - 1, destino));
+    destino = Math.max(0, Math.min(items.length - 1, destino));
 
-    irAProyecto(destino);
+    irA(destino);
   };
 
   window.addEventListener("pointerup", finalizarArrastre);
   window.addEventListener("pointercancel", finalizarArrastre);
+  window.addEventListener("resize", actualizarPosicion);
+
+  render();
+
+  return {
+    irA,
+    anterior: () => { if (indiceActivo > 0) irA(indiceActivo - 1); },
+    siguiente: () => { if (indiceActivo < items.length - 1) irA(indiceActivo + 1); },
+    actualizarPosicion,
+    getIndiceActivo: () => indiceActivo
+  };
 }
 
-function irAProyecto(index) {
-  if (index < 0 || index >= PROYECTOS.length) return;
-  indiceActivo = index;
-  actualizarPosicionCarrusel();
+let carruselProyectos = null;
+let carruselKaggle = null;
+
+function renderizarProyectos() {
+  carruselProyectos = crearCarrusel({
+    viewport: document.getElementById("carrusel-viewport"),
+    track: document.getElementById("carrusel-track"),
+    prevBtn: document.getElementById("carrusel-prev"),
+    nextBtn: document.getElementById("carrusel-next"),
+    indicador: document.getElementById("carrusel-indicador"),
+    items: PROYECTOS,
+    renderCard: renderCardProyecto,
+    onOpenModal: abrirModal
+  });
+}
+
+function renderizarKaggle() {
+  carruselKaggle = crearCarrusel({
+    viewport: document.getElementById("carrusel-viewport-kaggle"),
+    track: document.getElementById("carrusel-track-kaggle"),
+    prevBtn: document.getElementById("carrusel-prev-kaggle"),
+    nextBtn: document.getElementById("carrusel-next-kaggle"),
+    indicador: document.getElementById("carrusel-indicador-kaggle"),
+    items: KAGGLE_COMPETICIONES,
+    renderCard: renderCardKaggle,
+    onOpenModal: abrirModalKaggle
+  });
+}
+
+function irAProyecto(idx) {
+  if (carruselProyectos) carruselProyectos.irA(idx);
+}
+
+function irAKaggle(idx) {
+  if (carruselKaggle) carruselKaggle.irA(idx);
 }
 
 function actualizarPosicionCarrusel() {
-  if (!carruselTrack || !carruselViewport) return;
-  const cards = carruselTrack.querySelectorAll(".card");
-  if (!cards.length) return;
-
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  carruselTrack.style.transition = reducedMotion
-    ? "none"
-    : "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)";
-  void carruselTrack.offsetWidth;
-
-  actualizarEstadoVisual(indiceActivo);
-
-  const targetX = obtenerTargetX(indiceActivo);
-  carruselTrack.style.transform = `translateX(${targetX}px)`;
+  if (carruselProyectos) carruselProyectos.actualizarPosicion();
 }
+
+function actualizarPosicionCarruselKaggle() {
+  if (carruselKaggle) carruselKaggle.actualizarPosicion();
+}
+
+/* Flechas de teclado (← →) — según la sección activa, cuando no hay modal abierto */
+window.addEventListener("keydown", (e) => {
+  if (modal && !modal.hidden) return;
+  const seccionActiva = document.querySelector(".seccion.activa");
+  if (!seccionActiva) return;
+
+  if (seccionActiva.id === "projects" && carruselProyectos) {
+    if (e.key === "ArrowLeft")  carruselProyectos.anterior();
+    if (e.key === "ArrowRight") carruselProyectos.siguiente();
+  } else if (seccionActiva.id === "kaggle" && carruselKaggle) {
+    if (e.key === "ArrowLeft")  carruselKaggle.anterior();
+    if (e.key === "ArrowRight") carruselKaggle.siguiente();
+  }
+});
 
 /* =========================================================
    MODAL — Detalle del proyecto
@@ -787,7 +904,7 @@ function abrirModal(i) {
 
   document.getElementById("modal-resultados").innerHTML =
     p.detalle.resultados.map((r) => `<li>${r}</li>`).join("");
-  document.getElementById("modal-tags").innerHTML = crearTags(p.tags);
+  document.getElementById("modal-tags").innerHTML = crearTags(p.tags, p.tagColors);
 
   const enlaceBtn = document.getElementById("modal-enlace");
   if (p.detalle.enlace && p.detalle.enlace.trim().startsWith("http")) {
@@ -842,52 +959,7 @@ function abrirModalKaggle(i) {
   modal.querySelector(".modal-cerrar").focus();
 }
 
-function renderizarKaggle() {
-  const grid = document.getElementById("kaggle-grid");
-  if (!grid) return;
 
-  grid.innerHTML = KAGGLE_COMPETICIONES.map((k, i) => `
-    <article class="tarjeta kaggle-card"
-             tabindex="0"
-             role="button"
-             data-index="${i}"
-             aria-label="Ver detalles de ${k.titulo}">
-      <img class="kaggle-thumb" src="${k.imagen}" alt="Miniatura — ${k.titulo}" loading="lazy" />
-      <div class="kaggle-meta">
-        <span class="kaggle-badge">${k.badge}</span>
-        <span class="kaggle-tipo">${k.tipo}</span>
-      </div>
-      <h3>${k.titulo}</h3>
-      <p class="subtitulo">${k.subtitulo}</p>
-      <p class="descripcion">${k.descripcion || k.detalle.descripcionLarga}</p>
-      <div class="tags">${crearTags(k.tags)}</div>
-      <div class="kaggle-pie">
-        <span class="kaggle-posicion">${k.posicion}</span>
-        <a href="${k.enlace}" target="_blank" rel="noopener" class="enlace-simple kaggle-enlace-ext" aria-label="Ver en Kaggle">Ver en Kaggle &rarr;</a>
-      </div>
-    </article>
-  `).join("");
-
-  /* Clic en tarjeta de Kaggle */
-  grid.addEventListener("click", (e) => {
-    if (e.target.closest(".kaggle-enlace-ext")) return;
-    const card = e.target.closest(".kaggle-card");
-    if (!card) return;
-    const idx = Number(card.dataset.index);
-    abrirModalKaggle(idx);
-  });
-
-  /* Teclado en tarjeta de Kaggle */
-  grid.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      const card = e.target.closest(".kaggle-card");
-      if (!card) return;
-      e.preventDefault();
-      const idx = Number(card.dataset.index);
-      abrirModalKaggle(idx);
-    }
-  });
-}
 
 function cerrarModal() {
   modal.hidden = true;

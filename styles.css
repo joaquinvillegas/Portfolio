@@ -884,6 +884,51 @@ a { color: inherit; }
   color: var(--texto);
 }
 
+/* ===== Tarjetas de Kaggle en el carrusel (diseño vertical original) ===== */
+.carrusel-track .kaggle-card {
+  flex: 0 0 380px;
+  max-width: 86vw;
+  min-height: 490px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 22px 20px;
+  border-radius: var(--radio);
+}
+
+.carrusel-track .kaggle-card:hover {
+  transform: none;
+}
+
+.carrusel-track .kaggle-card.activo {
+  transform: scale(1);
+  box-shadow: var(--sombra-fuerte);
+}
+
+.carrusel-track .kaggle-card.activo:hover {
+  transform: scale(1);
+}
+
+.carrusel-track .kaggle-card:not(.activo):hover {
+  transform: scale(0.88);
+  opacity: 0.72;
+  filter: blur(0.5px) grayscale(70%);
+}
+
+.carrusel-track .kaggle-card .kaggle-thumb {
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.carrusel-track .kaggle-card.activo .kaggle-thumb {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+.carrusel-track .kaggle-card .kaggle-pie {
+  margin-top: auto;
+}
+
 .enlace-simple {
   text-decoration: none;
   font-style: italic;
@@ -1135,6 +1180,7 @@ a { color: inherit; }
   .cv-columnas { grid-template-columns: repeat(2, 1fr); }
   .kaggle-grid { grid-template-columns: 1fr; }
   .carrusel-track .card { flex: 0 0 580px; min-height: 460px; }
+  .carrusel-track .kaggle-card { flex: 0 0 350px; min-height: 480px; }
 }
 
 @media (max-width: 640px) {
@@ -1183,6 +1229,12 @@ a { color: inherit; }
   .card-col-der .descripcion {
     font-size: 0.96rem;
     margin-bottom: 14px;
+  }
+
+  .carrusel-track .kaggle-card {
+    flex: 0 0 86vw;
+    min-height: auto;
+    padding: 20px 18px 18px;
   }
 
   .kaggle-grid { grid-template-columns: 1fr; }
