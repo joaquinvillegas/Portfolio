@@ -110,39 +110,71 @@ const PROYECTOS = [
     }
   },
   {
-    titulo: "Test A/B de Landing Page",
-    subtitulo: "Estadística · Experimentación",
-    rating: 4.5, // EDITA: puntuación de 0 a 5
-    descripcion: "Diseño y análisis de un experimento A/B para evaluar el impacto de un nuevo diseño de landing en la tasa de conversión.",
-    tags: ["Estadística", "Python", "A/B Testing"],
+    titulo: "Reconocimiento de emociones faciales con CNN para máquinas expendedoras",
+    subtitulo: "Python · Deep Learning",
+    rating: 4.0, // EDITA: puntuación de 0 a 5
+    descripcion: "Clasificación de emociones faciales con una red neuronal convolucional sobre FER2013, un conjunto de 35.887 imágenes de 48×48 píxeles obtenido de Hugging Face. Estudia si la expresión de la cara permite detectar el estado emocional de quien usa una máquina expendedora.",
+    tags: [
+      "Python",
+      "TensorFlow",
+      "Keras",
+      "Pandas",
+      "Scikit-learn",
+      "Matplotlib",
+      "Seaborn",
+      "Deep Learning"
+    ],
     imagen: "images/proyecto-4.svg",
     detalle: {
-      descripcionLarga: "Cálculo del tamaño muestral, verificación de la aleatorización y análisis de resultados con contrastes de hipótesis e intervalos de confianza.",
-      objetivo: "Decidir con rigor estadístico si el nuevo diseño mejora la conversión.",
-      resultados: [
-        "Mejora de conversión del 1.8 puntos porcentuales (p < 0.05).",
-        "Recomendación de implantar la variante B.",
-        "Plantilla reutilizable para futuros experimentos."
+      descripcionLarga: "Clasificación de emociones faciales con una red neuronal convolucional sobre FER2013, un conjunto de 35.887 imágenes de 48×48 píxeles obtenido de Hugging Face. Estudia si la expresión de la cara permite detectar el estado emocional de quien usa una máquina expendedora.",
+      objetivo: "Evaluar si una CNN puede reconocer el estado emocional de un usuario a partir de su expresión facial para personalizar recomendaciones de bebidas. Sirve a marketing y a desarrollo de producto para valorar la viabilidad del sistema y decidir cómo mejorarlo antes de aplicarlo en máquinas reales.",
+      resumen: [
+        "Partí de 35.887 imágenes con 7 emociones, ya divididas en entrenamiento, validación y prueba. Descarté Disgust (547 imágenes) por su fuerte desbalanceo y equilibré las seis clases restantes con 1.000 imágenes por clase en entrenamiento y 100 en validación y prueba. Normalicé los píxeles a [0, 1] y fijé semillas para garantizar la reproducibilidad.",
+        "Entrené una CNN secuencial con dos bloques convolucionales y dos capas densas con dropout, y probé 50 combinaciones aleatorias de hiperparámetros (filtros, neuronas, dropout y tamaño de lote). Controlé el sobreajuste con dropout y parada temprana, ya que las configuraciones grandes memorizaban el entrenamiento y generalizaban peor. Reentrené la mejor configuración y la evalué con matrices de confusión por emoción en entrenamiento y prueba."
       ],
-      enlace: "https://github.com/joaquinvillegas/ab-test"
+      resultados: [
+        "El modelo final acierta el 41,5 % en test con seis emociones: más del doble que el azar, pero insuficiente para uso comercial.",
+        "La búsqueda de 50 configuraciones tiene un techo del 44,3 % en validación: ajustar hiperparámetros apenas mejora el resultado.",
+        "Happy es la emoción mejor reconocida, con solo 34 errores de 100 imágenes en test.",
+        "Fear es la peor reconocida, con 80 errores de 100 imágenes en test.",
+        "El modelo final sobreajusta de forma moderada: la accuracy cae ≈ 8 puntos entre entrenamiento y test.",
+        "Disgust (547 imágenes) quedó fuera por desbalanceo, por lo que el sistema no puede reconocer esa emoción."
+      ],
+      enlace: "" // EDITA: [Enlace a GitHub] · [Enlace a la presentación]
     }
   },
   {
-    titulo: "Dashboard de RR. HH.",
-    subtitulo: "Tableau · People Analytics",
-    rating: 4.2, // EDITA: puntuación de 0 a 5
-    descripcion: "Visualización de rotación, absentismo y diversidad de plantilla para apoyar la toma de decisiones del departamento de personas.",
-    tags: ["Tableau", "Excel", "Visualización"],
+    titulo: "Análisis de sentimiento de los tweets de Elon Musk",
+    subtitulo: "Python · NLP",
+    rating: 4.0, // EDITA: puntuación de 0 a 5
+    descripcion: "Análisis de sentimiento de 50.395 tweets de Elon Musk (tras eliminar duplicados de 55.099) con VADER y un modelo RoBERTa para redes sociales. Estudia cómo evoluciona el tono en el tiempo y si se relaciona con el precio diario de las acciones de Tesla.",
+    tags: [
+      "Python",
+      "Pandas",
+      "spaCy",
+      "Transformers",
+      "VADER",
+      "Matplotlib",
+      "Seaborn",
+      "NLP"
+    ],
     imagen: "images/proyecto-5.svg",
     detalle: {
-      descripcionLarga: "Preparación de datos en Excel y creación de un dashboard en Tableau con indicadores de rotación, antigüedad, absentismo y distribución por departamento.",
-      objetivo: "Ofrecer a RR. HH. una herramienta visual para monitorizar la salud de la plantilla.",
-      resultados: [
-        "Detectado un pico de rotación en empleados con menos de 1 año.",
-        "Dashboard publicado en Tableau Public.",
-        "Base para un plan de onboarding mejorado."
+      descripcionLarga: "Análisis de sentimiento de 50.395 tweets de Elon Musk (tras eliminar duplicados de 55.099) con VADER y un modelo RoBERTa para redes sociales. Estudia cómo evoluciona el tono en el tiempo y si se relaciona con el precio diario de las acciones de Tesla.",
+      objetivo: "Evaluar si el tono de los mensajes públicos de Musk se relaciona con la cotización de Tesla. Sirve a analistas e inversores que quieran valorar si el sentimiento de figuras influyentes puede incorporarse a modelos de cartera o de predicción de precios.",
+      resumen: [
+        "Partí de 55.099 tweets y 24 columnas; las métricas de interacción tenían nulos importantes (viewCount solo en 34.455 registros), pero el texto estaba completo. Eliminé los duplicados por texto, conservando la primera aparición, y quedaron 50.395 tweets. Limpié URLs, números y puntuación, y corregí entidades HTML que aparecían como la palabra más frecuente.",
+        "Apliqué dos enfoques de sentimiento: VADER (léxico, umbral ±0,05) y un modelo RoBERTa ajustado a Twitter, con textos largos divididos en fragmentos de 512 tokens. Como no hay etiquetas reales, comparé sus distribuciones, que difieren de forma notable. Después agregué el sentimiento por día y lo crucé con el precio de Tesla mediante tasas de cambio diarias y una matriz de correlación."
       ],
-      enlace: "https://public.tableau.com/app/profile/joaquinvillegas"
+      resultados: [
+        "No hay relación entre el sentimiento de los tweets y el precio de Tesla: las correlaciones de las variaciones diarias son ≈ 0,00-0,01.",
+        "Tras la compra de Twitter (octubre de 2022) cae la proporción de tweets positivos y aumenta la de negativos, posiblemente por más contenido político.",
+        "VADER clasifica como positivos el 42,6 % de los tweets (21.446), por encima de neutros (19.755) y negativos (9.194).",
+        "RoBERTa clasifica como neutros el 55,1 % de los tweets (27.756), una lectura más conservadora que la de VADER.",
+        "Los negativos pesan más con RoBERTa (23,1 %; 11.649 tweets) que con VADER (18,2 %), y los positivos bajan a 10.990.",
+        "Los términos más frecuentes son Tesla, SpaceX y coches, y las palabras positivas superan con claridad a las negativas."
+      ],
+      enlace: "" // EDITA: [Enlace a GitHub] · [Enlace a la presentación]
     }
   },
   {
@@ -263,6 +295,23 @@ async function iniciarIntro() {
   const fijoEl   = document.getElementById("intro-fijo");
 
   if (!intro || !frase || !saludoEl || !fijoEl) return;
+
+  // Si ya se mostró en esta sesión o se ha recargado la página, no volver a mostrar
+  let yaMostrada = false;
+  try {
+    yaMostrada = sessionStorage.getItem("intro_mostrada") === "true" || document.body.classList.contains("sin-intro");
+  } catch (e) {}
+
+  if (yaMostrada) {
+    document.body.classList.remove("intro-activa");
+    intro.remove();
+    return;
+  }
+
+  // Marcar como mostrada para que al recargar no se repita
+  try {
+    sessionStorage.setItem("intro_mostrada", "true");
+  } catch (e) {}
 
   fijoEl.textContent  = TEXTO_FIJO.texto;
   fijoEl.style.fontFamily = TEXTO_FIJO.fuente;
@@ -394,7 +443,14 @@ const MAPA_COLORES_SKILLS = {
   "Python": "verde",
   "Pandas": "naranja",
   "NumPy": "celeste",
+  "TensorFlow": "naranja",
+  "Keras": "coral",
   "TensorFlow/Keras": "naranja",
+  "Deep Learning": "indigo",
+  "spaCy": "turquesa",
+  "Transformers": "amarillo",
+  "VADER": "morado",
+  "NLP": "menta",
   "Análisis exploratorio (EDA)": "turquesa",
   "Visualización de datos": "azul",
   "Plotly": "coral",

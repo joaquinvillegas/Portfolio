@@ -11,7 +11,27 @@
 
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="intro-activa">
+<body>
+  <script>
+    (function () {
+      try {
+        var esReload = false;
+        if (window.performance) {
+          var nav = performance.getEntriesByType ? performance.getEntriesByType("navigation") : [];
+          if (nav.length > 0 && nav[0].type === "reload") esReload = true;
+          else if (performance.navigation && performance.navigation.type === 1) esReload = true;
+        }
+        if (sessionStorage.getItem("intro_mostrada") === "true" || esReload) {
+          document.body.classList.add("sin-intro");
+          sessionStorage.setItem("intro_mostrada", "true");
+        } else {
+          document.body.classList.add("intro-activa");
+        }
+      } catch (e) {
+        document.body.classList.add("intro-activa");
+      }
+    })();
+  </script>
 
   <!-- ===== BARRA DE NAVEGACIÓN SUPERIOR ===== -->
   <header class="navbar-wrapper">

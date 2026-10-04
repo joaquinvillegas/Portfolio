@@ -176,6 +176,10 @@ a { color: inherit; }
 }
 
 /* ===== Intro ===== */
+body.sin-intro #intro {
+  display: none !important;
+}
+
 #intro {
   position: fixed;
   inset: 0;
