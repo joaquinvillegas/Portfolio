@@ -7,21 +7,37 @@
    ========================================================= */
 const PROYECTOS = [
   {
-    titulo: "Dashboard de Ventas Retail",
-    subtitulo: "Power BI · Análisis comercial",
-    rating: 4.8, // EDITA: puntuación de 0 a 5 (ej: 4.8)
-    descripcion: "Dashboard interactivo para seguir ventas, márgenes y rendimiento por tienda y categoría a lo largo del año.",
-    tags: ["Power BI", "DAX", "SQL", "Excel"],
+    titulo: "Predicción de retornos bursátiles de las Magnificent 7",
+    subtitulo: "Python · Machine Learning",
+    rating: 5.0, // EDITA: puntuación de 0 a 5 (ej: 4.8)
+    descripcion: "Predicción del retorno acumulado a 22 días de las siete mayores tecnológicas del S&P 500, a partir de 1.391.801 registros diarios de precios de FactSet (2014-2025). Compara cuatro modelos y evalúa si las predicciones permiten batir a una estrategia de comprar y mantener.",
+    tags: [
+      "Python",
+      "Pandas",
+      "NumPy",
+      "Scikit-learn",
+      "LightGBM",
+      "TensorFlow/Keras",
+      "Matplotlib",
+      "Machine Learning supervisado"
+    ],
     imagen: "images/proyecto-1.svg",
     detalle: {
-      descripcionLarga: "Construí un modelo de datos en estrella a partir de las tablas transaccionales de una cadena retail y diseñé un dashboard en Power BI con filtros por región, tienda, categoría y periodo.",
-      objetivo: "Dar a la dirección comercial una visión única y actualizada de las ventas para detectar tiendas y productos con bajo rendimiento.",
-      resultados: [
-        "Identificadas 3 categorías con margen negativo en el último trimestre.",
-        "Reducción del tiempo de reporting semanal de 4 horas a 15 minutos.",
-        "KPIs unificados para todas las tiendas."
+      descripcionLarga: "Predicción del retorno acumulado a 22 días de las siete mayores tecnológicas del S&P 500, a partir de 1.391.801 registros diarios de precios de FactSet (2014-2025). Compara cuatro modelos y evalúa si las predicciones permiten batir a una estrategia de comprar y mantener.",
+      objetivo: "Comprobar si los retornos históricos diarios bastan para anticipar el comportamiento mensual de las Magnificent 7. Sirve al inversor que quiere apoyar sus decisiones en datos y al analista que valora si una estrategia basada solo en precios supera al mercado.",
+      resumen: [
+        "Partí de 1.391.801 registros de 503 empresas del S&P 500 y me quedé con las 7 Magnificent 7 (19.369 filas), con retorno diario ajustado por dividendos. No hubo que tratar nulos en esas empresas. Definí como objetivo el retorno acumulado a 22 días y como variables los 60 retornos diarios anteriores. Dividí en 80/20 de forma cronológica (corte en octubre de 2023), excluí del entrenamiento las filas cuyo objetivo invadía el test y ajusté el escalado solo con train para evitar fuga de datos.",
+        "Entrené un modelo Naive, una regresión lineal, LightGBM y una LSTM, con búsqueda aleatoria de hiperparámetros y validación temporal. La LSTM sobreajustó: el error de validación empeoró mientras el de train bajaba. Validé el mejor modelo con un backtesting de ventana rodante (reentreno mensual con 365 días) y simulé una estrategia de inversión frente a Buy & Hold con un coste del 0,1 % por operación."
       ],
-      enlace: "https://github.com/joaquinvillegas/dashboard-ventas"
+      resultados: [
+        "LightGBM es el único modelo con R² positivo en test (0,0032): explica una fracción mínima de la varianza.",
+        "La LSTM obtiene el peor resultado (R² = -0,2123) y muestra un sobreajuste claro en las curvas de entrenamiento.",
+        "En el backtesting rodante el R² de LightGBM cae a -0,0250: sin capacidad predictiva en condiciones realistas.",
+        "LightGBM se equivoca de media ≈ 8 puntos porcentuales (MAE = 0,0810) al predecir el retorno a 22 días.",
+        "Predice siempre un retorno positivo, así que la estrategia permanece invertida el 100 % del tiempo y equivale a Buy & Hold.",
+        "La cartera pasa de 70.000 € a ≈ 150.000 €, ligeramente por debajo de Buy & Hold; ningún modelo anticipó la caída de marzo de 2025."
+      ],
+      enlace: "" // EDITA: [Enlace a GitHub] · [Enlace a la presentación]
     }
   },
   {
@@ -377,6 +393,8 @@ const MAPA_COLORES_SKILLS = {
   "BigQuery": "celeste",
   "Python": "verde",
   "Pandas": "naranja",
+  "NumPy": "celeste",
+  "TensorFlow/Keras": "naranja",
   "Análisis exploratorio (EDA)": "turquesa",
   "Visualización de datos": "azul",
   "Plotly": "coral",
