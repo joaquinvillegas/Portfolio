@@ -41,9 +41,9 @@
       <a href="#kaggle"   class="nav-link" id="nav-kaggle"   data-i18n="nav_kaggle" aria-label="Ir a Kaggle Competitions">Kaggle Competitions</a>
     </nav>
     <div class="lang-selector" role="group" aria-label="Selector de idioma / Language selector">
-      <button type="button" class="lang-btn" id="lang-en" aria-label="English" aria-pressed="true">EN</button>
+      <button type="button" class="lang-btn" id="lang-en" aria-label="English" aria-pressed="false" onclick="cambiarIdioma('en')">EN</button>
       <span class="lang-divider" aria-hidden="true">|</span>
-      <button type="button" class="lang-btn" id="lang-es" aria-label="Español" aria-pressed="false">ES</button>
+      <button type="button" class="lang-btn activo" id="lang-es" aria-label="Español" aria-pressed="true" onclick="cambiarIdioma('es')">ES</button>
     </div>
   </header>
 
@@ -273,7 +273,7 @@
     </div>
   </div>
 
-  <script src="i18n.js"></script>
-  <script src="script.js"></script>
+  <script src="i18n.js?v=5"></script>
+  <script src="script.js?v=5"></script>
 </body>
 </html>

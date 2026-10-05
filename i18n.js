@@ -19,7 +19,7 @@ const TRANSLATIONS = {
     // CV Columns
     col_education: "Education",
     edu_1: "<span class=\"cv-item-titulo\">Master's in Business Analytics</span><span class=\"cv-item-entidad\">Universidad Pontificia Comillas (ICADE)</span><span class=\"cv-item-fecha\">Oct. 2025 – Jun. 2026</span>",
-    edu_2: "<span class=\"cv-item-titulo\">Bachelor's in Business Administration (ADE)</span><span class=\"cv-item-entidad\">Universidad Complutense de Madrid</span><span class=\"cv-item-fecha\">Sept. 2021 – Jun. 2025</span>",
+    edu_2: "<span class=\"cv-item-titulo\">Bachelor's in Business Administration (BBA)</span><span class=\"cv-item-entidad\">Universidad Complutense de Madrid</span><span class=\"cv-item-fecha\">Sept. 2021 – Jun. 2025</span>",
 
     col_skills: "Tools & Skills",
     skills_1: "<strong>Python</strong>",
@@ -94,27 +94,216 @@ const TRANSLATIONS = {
   }
 };
 
+/* =========================================================
+   CONTENIDO EN INGLÉS de PROYECTOS y KAGGLE_COMPETICIONES
+   Se indexa por posición (mismo orden que los arrays de script.js)
+   y solo incluye los campos traducibles; el resto (imagen, rating,
+   tags, enlaces) se hereda del original. EDITA al añadir proyectos.
+   ========================================================= */
+const CONTENIDO_EN = {
+  proyectos: [
+    {
+      titulo: "Stock return prediction for the Magnificent 7",
+      subtitulo: "Python · Machine Learning",
+      descripcion: "Prediction of the 22-day cumulative return of the seven largest S&P 500 tech companies, using 1,391,801 daily FactSet price records (2014-2025). It compares four models and tests whether the predictions can beat a buy-and-hold strategy.",
+      detalle: {
+        descripcionLarga: "Prediction of the 22-day cumulative return of the seven largest S&P 500 tech companies, using 1,391,801 daily FactSet price records (2014-2025). It compares four models and tests whether the predictions can beat a buy-and-hold strategy.",
+        objetivo: "To check whether historical daily returns are enough to anticipate the monthly behaviour of the Magnificent 7. Useful for investors who want to back their decisions with data and for analysts assessing whether a price-only strategy can beat the market.",
+        resumen: [
+          "I started from 1,391,801 records for 503 S&P 500 companies and kept the 7 Magnificent 7 (19,369 rows), using dividend-adjusted daily returns. No missing values had to be handled for these companies. I defined the 22-day cumulative return as the target and the previous 60 daily returns as features. I split 80/20 chronologically (cutoff in October 2023), excluded from training the rows whose target overlapped the test period, and fitted the scaler on the training set only to avoid data leakage.",
+          "I trained a Naive model, a linear regression, LightGBM and an LSTM, with random hyperparameter search and temporal validation. The LSTM overfitted: validation error got worse while training error kept falling. I validated the best model with a rolling-window backtest (monthly retraining on 365 days) and simulated an investment strategy against Buy & Hold with a 0.1% cost per trade."
+        ],
+        resultados: [
+          "LightGBM is the only model with a positive test R² (0.0032): it explains a tiny fraction of the variance.",
+          "The LSTM performs worst (R² = -0.2123) and clearly overfits in the training curves.",
+          "In the rolling backtest, LightGBM's R² drops to -0.0250: no predictive power under realistic conditions.",
+          "LightGBM is off by about 8 percentage points on average (MAE = 0.0810) when predicting the 22-day return.",
+          "It always predicts a positive return, so the strategy stays invested 100% of the time and is equivalent to Buy & Hold.",
+          "The portfolio grows from €70,000 to ≈ €150,000, slightly below Buy & Hold; no model anticipated the March 2025 drop."
+        ]
+      }
+    },
+    {
+      titulo: "Exploratory analysis (EDA) of Airbnb listings in 9 European cities",
+      subtitulo: "Python · Data analysis",
+      descripcion: "Exploratory analysis of 41,714 Airbnb listings in nine European cities to understand which factors are associated with price and guest satisfaction.",
+      detalle: {
+        descripcionLarga: "Exploratory analysis of 41,714 Airbnb listings in Amsterdam, Athens, Barcelona, Berlin, Budapest, Lisbon, Paris, Rome and Vienna. It studies how price, location, listing type, cleanliness, satisfaction and superhost status relate to each other.",
+        objetivo: "To identify which variables are associated with price and guest satisfaction in listings across nine European cities. For hosts, it is a reference for setting prices and prioritising what improves reviews. For guests, it helps explain why prices vary between cities and which ratings are worth looking at.",
+        resumen: [
+          "I started from 41,714 records and 19 columns; I dropped 4 (attraction and restaurant indexes) and worked with 15 variables. I checked data types and missing values (none). Price has extreme values (mean ≈ €260, median ≈ €204, maximum ≈ €18,545), so I capped the chart axes.",
+          "The analysis was univariate (average price by city, room type, capacity and distances), bivariate (price vs distance with OLS regression, satisfaction vs cleanliness and price brackets, weekdays vs weekends) and multivariate (correlation matrices and a comparison of superhosts with regular hosts). I detected multicollinearity between Room Type and Shared Room and explained apparently contradictory correlations, such as that of private room and price (-0.15)."
+        ],
+        resultados: [
+          "Amsterdam has the highest average price (≈ €573), followed by Paris (≈ €393); Athens (≈ €152) and Budapest (≈ €177) are the cheapest.",
+          "Cleanliness is the variable most associated with satisfaction, with a strong positive relationship.",
+          "Proximity to the metro and to the city centre are the variables most associated with price; the metro weighs more and the highest prices appear within 500 m of the metro.",
+          "Satisfaction is concentrated above 80 in all price brackets: no relationship between price and satisfaction is observed.",
+          "Superhosts have better satisfaction and cleanliness, a slightly lower average price and a location slightly further from the centre.",
+          "Capacity is the room variable most associated with price, although the correlation is weak (≈ 0.18).",
+          "Price does not vary noticeably between weekdays and weekends."
+        ]
+      }
+    },
+    {
+      titulo: "Credit card default prediction with supervised ML",
+      subtitulo: "Python · Machine Learning",
+      descripcion: "Analysis of 25,134 credit card customers from the Credit Card Approval Prediction dataset (Kaggle), which combines applications and monthly payment history. It studies which characteristics are associated with having had a payment delayed by more than 30 days.",
+      detalle: {
+        descripcionLarga: "Analysis of 25,134 credit card customers from the Credit Card Approval Prediction dataset (Kaggle), which combines applications and monthly payment history. It studies which characteristics are associated with having had a payment delayed by more than 30 days.",
+        objetivo: "To predict which customers will miss a payment by more than 30 days and compare models for detecting them. It helps lenders prioritise manual reviews, request guarantees or ask for more information before granting credit.",
+        resumen: [
+          "I started from 438,557 applications with 18 columns and a monthly history of 1,048,575 records. I removed 134,203 rows with no occupation, since being categorical it could not be imputed, and capped income and years employed using the interquartile range rule. I built the default variable (delay of more than 30 days) from the history and joined it by customer, leaving 25,134 customers and a 12.3% default rate.",
+          "I fitted an explanatory logit with Statsmodels and trained a logit, a Random Forest and a neural network with Scikit-learn. The main problem was the imbalance of the target variable, which I addressed with class weights and threshold tuning to maximise default detection. I limited overfitting with random hyperparameter search, cross-validation, early stopping and L2 regularisation. In the Random Forest it partly persisted."
+        ],
+        resultados: [
+          "The Random Forest is the best model: it detects 79% of defaults on the test set, with a threshold of 0.35.",
+          "Its test AUC is 0.72 versus 0.92 in training, which indicates overfitting that was not fully eliminated.",
+          "Its precision is 17%: out of every 100 customers flagged as defaulters, only 17 are, because of the many false alarms.",
+          "The neural network falls behind, with a test AUC of 0.62, due to the small size and imbalance of the dataset.",
+          "The predictive logit barely beats chance (AUC ≈ 0.54), because it does not capture non-linear relationships.",
+          "The explanatory logit has a pseudo R² of 0.005: income and the other variables explain very little of default.",
+          "No model beats the majority-class rule (87.7% accuracy): the 36-54% accuracy is the cost of prioritising recall."
+        ]
+      }
+    },
+    {
+      titulo: "Facial emotion recognition with CNN for vending machines",
+      subtitulo: "Python · Deep Learning",
+      descripcion: "Facial emotion classification with a convolutional neural network on FER2013, a set of 35,887 48×48-pixel images obtained from Hugging Face. It studies whether facial expression can reveal the emotional state of someone using a vending machine.",
+      detalle: {
+        descripcionLarga: "Facial emotion classification with a convolutional neural network on FER2013, a set of 35,887 48×48-pixel images obtained from Hugging Face. It studies whether facial expression can reveal the emotional state of someone using a vending machine.",
+        objetivo: "To evaluate whether a CNN can recognise a user's emotional state from their facial expression in order to personalise drink recommendations. Useful for marketing and product development to assess the feasibility of the system and decide how to improve it before applying it to real machines.",
+        resumen: [
+          "I started from 35,887 images with 7 emotions, already split into training, validation and test sets. I discarded Disgust (547 images) because of its strong imbalance and balanced the remaining six classes with 1,000 images per class for training and 100 for validation and test. I normalised pixels to [0, 1] and fixed seeds to guarantee reproducibility.",
+          "I trained a sequential CNN with two convolutional blocks and two dense layers with dropout, and tested 50 random hyperparameter combinations (filters, neurons, dropout and batch size). I controlled overfitting with dropout and early stopping, since large configurations memorised the training data and generalised worse. I retrained the best configuration and evaluated it with per-emotion confusion matrices on training and test."
+        ],
+        resultados: [
+          "The final model reaches 41.5% accuracy on the test set with six emotions: more than double chance, but insufficient for commercial use.",
+          "The 50-configuration search has a ceiling of 44.3% on validation: tuning hyperparameters barely improves the result.",
+          "Happy is the best-recognised emotion, with only 34 errors out of 100 test images.",
+          "Fear is the worst recognised, with 80 errors out of 100 test images.",
+          "The final model overfits moderately: accuracy drops ≈ 8 points between training and test.",
+          "Disgust (547 images) was left out due to imbalance, so the system cannot recognise that emotion."
+        ]
+      }
+    },
+    {
+      titulo: "Sentiment analysis of Elon Musk's tweets",
+      subtitulo: "Python · NLP",
+      descripcion: "Sentiment analysis of 50,395 Elon Musk tweets (after removing duplicates from 55,099) with VADER and a RoBERTa model for social media. It studies how the tone evolves over time and whether it relates to Tesla's daily stock price.",
+      detalle: {
+        descripcionLarga: "Sentiment analysis of 50,395 Elon Musk tweets (after removing duplicates from 55,099) with VADER and a RoBERTa model for social media. It studies how the tone evolves over time and whether it relates to Tesla's daily stock price.",
+        objetivo: "To assess whether the tone of Musk's public messages relates to Tesla's share price. Useful for analysts and investors who want to judge whether the sentiment of influential figures can be incorporated into portfolio or price-prediction models.",
+        resumen: [
+          "I started from 55,099 tweets and 24 columns; the engagement metrics had significant missing values (viewCount only in 34,455 records), but the text was complete. I removed duplicates by text, keeping the first occurrence, leaving 50,395 tweets. I cleaned URLs, numbers and punctuation, and fixed HTML entities that appeared as the most frequent word.",
+          "I applied two sentiment approaches: VADER (lexicon-based, ±0.05 threshold) and a RoBERTa model fine-tuned for Twitter, with long texts split into 512-token chunks. Since there are no ground-truth labels, I compared their distributions, which differ notably. Then I aggregated sentiment by day and cross-referenced it with Tesla's price using daily rates of change and a correlation matrix."
+        ],
+        resultados: [
+          "There is no relationship between tweet sentiment and Tesla's price: the correlations of daily changes are ≈ 0.00-0.01.",
+          "After the Twitter acquisition (October 2022), the share of positive tweets falls and the share of negative ones rises, possibly due to more political content.",
+          "VADER classifies 42.6% of tweets as positive (21,446), above neutral (19,755) and negative (9,194).",
+          "RoBERTa classifies 55.1% of tweets as neutral (27,756), a more conservative reading than VADER's.",
+          "Negatives weigh more with RoBERTa (23.1%; 11,649 tweets) than with VADER (18.2%), and positives drop to 10,990.",
+          "The most frequent terms are Tesla, SpaceX and cars, and positive words clearly outnumber negative ones."
+        ]
+      }
+    },
+    {
+      titulo: "Report Automation",
+      subtitulo: "Python · Excel",
+      descripcion: "Python script that extracts data, transforms it and automatically generates monthly Excel reports with charts.",
+      detalle: {
+        descripcionLarga: "Simple pipeline with Pandas and OpenPyXL that reads several sources, validates the data, computes the KPIs and exports a formatted report ready to send.",
+        objetivo: "To eliminate repetitive manual work and errors in monthly reports.",
+        resultados: [
+          "Saves about 10 hours of work per month.",
+          "Zero manual copy errors since it was introduced.",
+          "Consistent report for all departments."
+        ]
+      }
+    }
+  ],
+  kaggle: [
+    {
+      subtitulo: "Predicting student performance through game logs",
+      badge: "Top 7% · Bronze Medal",
+      tipo: "Featured Competition",
+      posicion: "Position: <strong>94 / 1,345 teams</strong>",
+      descripcion: "Machine Learning model to predict whether students will correctly answer questions about an educational game based on a temporal analysis of their interactions.",
+      detalle: {
+        descripcionLarga: "Machine Learning model to predict whether students will correctly answer questions about an educational game based on a temporal analysis of their interactions.",
+        objetivo: "To predict in real time the student's success at each assessment level to enable adaptive teaching interventions.",
+        resultados: [
+          "Exhaustive feature engineering over cumulative time windows and click patterns.",
+          "LightGBM model with GroupKFold validation by student to avoid data leakage.",
+          "Final position in the Top 7% and bronze medal among 1,345 international teams."
+        ]
+      }
+    },
+    {
+      subtitulo: "Binary classification and interdimensional transport",
+      badge: "Top 12%",
+      tipo: "Tabular Series",
+      posicion: "Score: <strong>0.812 CV</strong>",
+      descripcion: "Data cleaning and preprocessing with advanced imputation, exploratory analysis, encoding of complex categorical variables and ensembling of XGBoost and CatBoost models.",
+      detalle: {
+        descripcionLarga: "Data cleaning and preprocessing with advanced imputation, exploratory analysis, encoding of complex categorical variables and ensembling of XGBoost and CatBoost models.",
+        objetivo: "To predict which passengers were transported to an alternate dimension during the spaceship collision.",
+        resultados: [
+          "Extraction of cabin, deck, number and side to enrich the spatial signal.",
+          "Imputation by age group, amenity spending and home planet.",
+          "Weighted ensemble of XGBoost, CatBoost and LightGBM reaching 0.812 in cross-validation."
+        ]
+      }
+    },
+    {
+      subtitulo: "House price prediction with 79 variables",
+      badge: "Tabular Regression",
+      tipo: "Learning Competition",
+      posicion: "Metric: <strong>0.114 RMSE</strong>",
+      descripcion: "Skewness handling with logarithmic transformations, Lasso/Ridge regularisation, hyperparameter optimisation with Optuna and final stacking.",
+      detalle: {
+        descripcionLarga: "Skewness handling with logarithmic transformations, Lasso/Ridge regularisation, hyperparameter optimisation with Optuna and final stacking.",
+        objetivo: "To build a robust predictive model to estimate residential sale prices from 79 heterogeneous variables.",
+        resultados: [
+          "Box-Cox and log transforms on highly skewed variables.",
+          "Bayesian hyperparameter optimisation with Optuna for regularised linear models and trees.",
+          "Stacking of Lasso, Ridge, GradientBoosting and XGBoost achieving a score of 0.114 RMSE."
+        ]
+      }
+    }
+  ]
+};
+
+/* Tags que están en español en script.js → su versión inglesa.
+   El color se sigue calculando con el nombre original. */
+const TAGS_EN = {
+  "Análisis exploratorio (EDA)": "Exploratory analysis (EDA)",
+  "Visualización de datos": "Data visualization",
+  "Estadística": "Statistics",
+  "Análisis de correlaciones": "Correlation analysis",
+  "Machine Learning supervisado": "Supervised Machine Learning",
+  "Automatización": "Automation"
+};
+
 /**
  * Determina el idioma inicial:
- * 1. Elección guardada en localStorage (prioridad).
- * 2. Si navigator.language empieza por 'es', arranca en español.
- * 3. Por defecto, inglés ('en').
+ * Por defecto, SIEMPRE español ('es').
+ * Solo usa elección previa si el usuario cambió expresamente en la sesión activa.
  */
 function obtenerIdiomaInicial() {
   try {
-    const guardado = localStorage.getItem("portfolio_lang");
-    if (guardado === "es" || guardado === "en") {
-      return guardado;
+    const sesion = sessionStorage.getItem("portfolio_lang");
+    if (sesion === "es" || sesion === "en") {
+      return sesion;
     }
   } catch (e) {
-    // Si localStorage no está disponible
+    // Si sessionStorage no está disponible
   }
 
-  const navLang = (navigator.language || navigator.userLanguage || "").toLowerCase();
-  if (navLang.startsWith("es")) {
-    return "es";
-  }
-  return "en";
+  // Por defecto, español
+  return "es";
 }
 
 let idiomaActual = obtenerIdiomaInicial();
@@ -124,8 +313,9 @@ let idiomaActual = obtenerIdiomaInicial();
  * Si falta en el idioma actual (o en español), se muestra la inglesa como fallback.
  */
 function t(clave) {
-  if (TRANSLATIONS[idiomaActual] && TRANSLATIONS[idiomaActual][clave] !== undefined) {
-    return TRANSLATIONS[idiomaActual][clave];
+  const actual = typeof idiomaActual !== "undefined" ? idiomaActual : (window.idiomaActual || "es");
+  if (TRANSLATIONS[actual] && TRANSLATIONS[actual][clave] !== undefined) {
+    return TRANSLATIONS[actual][clave];
   }
   if (TRANSLATIONS.en && TRANSLATIONS.en[clave] !== undefined) {
     return TRANSLATIONS.en[clave];
@@ -139,7 +329,8 @@ function t(clave) {
  * - data-i18n-aria: actualiza aria-label
  */
 function aplicarTraducciones() {
-  document.documentElement.lang = idiomaActual;
+  const actual = typeof idiomaActual !== "undefined" ? idiomaActual : (window.idiomaActual || "es");
+  document.documentElement.lang = actual;
 
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     const clave = el.getAttribute("data-i18n");
@@ -160,7 +351,7 @@ function aplicarTraducciones() {
   const btnEn = document.getElementById("lang-en");
   const btnEs = document.getElementById("lang-es");
   if (btnEn && btnEs) {
-    const esEn = idiomaActual === "en";
+    const esEn = actual === "en";
     btnEn.classList.toggle("activo", esEn);
     btnEn.setAttribute("aria-pressed", esEn ? "true" : "false");
 
@@ -176,15 +367,32 @@ function aplicarTraducciones() {
 }
 
 /**
- * Cambia el idioma actual, guarda en localStorage y actualiza la vista.
+ * Cambia el idioma actual, guarda en almacenamiento y actualiza la vista.
  */
 function cambiarIdioma(nuevoIdioma) {
   if (nuevoIdioma !== "es" && nuevoIdioma !== "en") return;
   idiomaActual = nuevoIdioma;
+  window.idiomaActual = nuevoIdioma;
   try {
+    sessionStorage.setItem("portfolio_lang", nuevoIdioma);
     localStorage.setItem("portfolio_lang", nuevoIdioma);
   } catch (e) {
-    // Ignorar si localStorage está restringido
+    // Ignorar si el almacenamiento está restringido
   }
   aplicarTraducciones();
+  // Hook definido en script.js: vuelve a pintar carruseles y modal abierto
+  if (typeof alCambiarIdioma === "function") {
+    alCambiarIdioma();
+  } else if (typeof window.alCambiarIdioma === "function") {
+    window.alCambiarIdioma();
+  }
 }
+
+// Exposición global para garantizar compatibilidad total
+window.TRANSLATIONS = TRANSLATIONS;
+window.CONTENIDO_EN = CONTENIDO_EN;
+window.TAGS_EN = TAGS_EN;
+window.idiomaActual = idiomaActual;
+window.t = t;
+window.cambiarIdioma = cambiarIdioma;
+window.aplicarTraducciones = aplicarTraducciones;

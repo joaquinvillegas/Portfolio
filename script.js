@@ -402,9 +402,11 @@ function mostrarSeccion(id, animate) {
 
   // Si abrimos Projects o Kaggle: recalcular posición del carrusel
   if (id === "projects") {
-    setTimeout(actualizarPosicionCarrusel, 50);
+    setTimeout(actualizarPosicionCarrusel, 30);
+    setTimeout(actualizarPosicionCarrusel, 160);
   } else if (id === "kaggle") {
-    setTimeout(actualizarPosicionCarruselKaggle, 50);
+    setTimeout(actualizarPosicionCarruselKaggle, 30);
+    setTimeout(actualizarPosicionCarruselKaggle, 160);
   }
 }
 
@@ -508,8 +510,28 @@ const crearTags = (tags, colorOverrides = {}) =>
     const color = (typeof t === "object" && t !== null && t.color)
       ? t.color
       : (colorOverrides[nombre] || obtenerColorTag(nombre));
-    return `<span class="tag tag-${color}">${nombre}</span>`;
+    // El color usa el nombre original; el texto se traduce si hay versión inglesa
+    const lang = typeof idiomaActual !== "undefined" ? idiomaActual : (window.idiomaActual || "es");
+    const tagsDict = typeof TAGS_EN !== "undefined" ? TAGS_EN : window.TAGS_EN;
+    const etiqueta = (lang === "en" && tagsDict && tagsDict[nombre]) ? tagsDict[nombre] : nombre;
+    return `<span class="tag tag-${color}">${etiqueta}</span>`;
   }).join("");
+
+/* Devuelve el proyecto/competición en el idioma activo: si es inglés,
+   superpone los campos de CONTENIDO_EN (i18n.js) sobre el original. */
+function traducirItem(tipo, i, base) {
+  const lang = typeof idiomaActual !== "undefined" ? idiomaActual : (window.idiomaActual || "es");
+  if (lang !== "en") return base;
+  const dict = typeof CONTENIDO_EN !== "undefined" ? CONTENIDO_EN : window.CONTENIDO_EN;
+  const en = dict && dict[tipo] && dict[tipo][i];
+  if (!en) return base;
+  return { ...base, ...en, detalle: { ...base.detalle, ...(en.detalle || {}) } };
+}
+
+function textoDe() {
+  const lang = typeof idiomaActual !== "undefined" ? idiomaActual : (window.idiomaActual || "es");
+  return lang === "en" ? "of" : "de";
+}
 
 /* Genera HTML de estrellas para la tarjeta del carrusel (sobrias, gris/negro) */
 function crearEstrellasCard(rating) {
@@ -537,13 +559,14 @@ function crearEstrellasCard(rating) {
 }
 
 function renderCardProyecto(p, i, esActivo) {
+  p = traducirItem("proyectos", i, p);
   return `
     <article class="card ${esActivo ? "activo" : ""}"
              tabindex="${esActivo ? "0" : "-1"}"
              data-index="${i}"
              role="group"
              aria-roledescription="slide"
-             aria-label="${i + 1} de ${PROYECTOS.length}: ${p.titulo}">
+             aria-label="${i + 1} ${textoDe()} ${PROYECTOS.length}: ${p.titulo}">
       <div class="card-col-izq">
         <img src="${p.imagen}" alt="${p.titulo}" loading="lazy" draggable="false" />
       </div>
@@ -559,6 +582,7 @@ function renderCardProyecto(p, i, esActivo) {
 }
 
 function renderCardKaggle(k, i, esActivo) {
+  k = traducirItem("kaggle", i, k);
   const labelVer = typeof t === "function" ? t("kaggle_view_link") : "Ver en Kaggle &rarr;";
   return `
     <article class="card kaggle-card ${esActivo ? "activo" : ""}"
@@ -566,7 +590,7 @@ function renderCardKaggle(k, i, esActivo) {
              data-index="${i}"
              role="group"
              aria-roledescription="slide"
-             aria-label="${i + 1} de ${KAGGLE_COMPETICIONES.length}: ${k.titulo}">
+             aria-label="${i + 1} ${textoDe()} ${KAGGLE_COMPETICIONES.length}: ${k.titulo}">
       <img class="kaggle-thumb" src="${k.imagen}" alt="Miniatura — ${k.titulo}" loading="lazy" draggable="false" />
       <div class="kaggle-meta">
         <span class="kaggle-badge">${k.badge}</span>
@@ -605,40 +629,56 @@ function crearCarrusel({
   let pointerStartY = 0;
   let lastPointerX = 0;
   let lastPointerTime = 0;
-  let velocityX = 0;
+  let velocityX = 0;            // velocidad del puntero en px/ms (suavizada)
   let hasMovedSignificant = false;
   let isHorizontalDrag = null;
   let baseTargetX = 0;
 
-  function obtenerTargetX(idx) {
-    const cards = track.querySelectorAll(".card");
-    if (!cards.length || !cards[idx]) return 0;
-    const card = cards[idx];
+  /* Motor de movimiento: un muelle críticamente amortiguado animado con
+     requestAnimationFrame. El track y el efecto foco se actualizan en el
+     mismo frame, así que todo va sincronizado y sin saltos. */
+  let posX = 0;                 // posición actual del track (px)
+  let velX = 0;                 // velocidad del muelle (px/s)
+  let destinoX = 0;             // posición de reposo objetivo
+  let rafId = null;
+  let lastFrame = 0;
+  let enRueda = false;
+  let wheelTimer = null;
+  let cards = [];
+  let targetXs = [];
+  let paso = 400;               // distancia entre centros de tarjetas contiguas
+  const RIGIDEZ = 170;          // EDITA: más alto = más rápido
+  const AMORTIGUACION = 26;     // EDITA: ≈ 2·√RIGIDEZ = sin rebote; más bajo = rebote suave
+  const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  function calcularMedidas() {
+    cards = Array.from(track.querySelectorAll(".card"));
     const viewportW = viewport.clientWidth;
-    const cardLeft  = card.offsetLeft;
-    const cardW     = card.offsetWidth;
-    return (viewportW / 2) - (cardLeft + cardW / 2);
+    targetXs = cards.map((c) => (viewportW / 2) - (c.offsetLeft + c.offsetWidth / 2));
+    paso = targetXs.length > 1 ? Math.abs(targetXs[0] - targetXs[1]) : 400;
+    if (!paso) paso = 400;
   }
 
-  function obtenerTranslateXActual() {
-    const st = window.getComputedStyle(track);
-    const tr = st.transform || st.webkitTransform;
-    if (!tr || tr === "none") return obtenerTargetX(indiceActivo);
-    const match = tr.match(/matrix\(([^)]+)\)/);
-    if (match) {
-      const parts = match[1].split(",");
-      return parseFloat(parts[4]) || 0;
+  function indiceMasCercano(x) {
+    let mejor = 0;
+    let minD = Infinity;
+    for (let i = 0; i < targetXs.length; i++) {
+      const d = Math.abs(x - targetXs[i]);
+      if (d < minD) { minD = d; mejor = i; }
     }
-    const match3d = tr.match(/matrix3d\(([^)]+)\)/);
-    if (match3d) {
-      const parts = match3d[1].split(",");
-      return parseFloat(parts[12]) || 0;
-    }
-    return obtenerTargetX(indiceActivo);
+    return mejor;
+  }
+
+  /* Resistencia elástica en los extremos */
+  function conElastico(x) {
+    const maxX = targetXs[0];
+    const minX = targetXs[targetXs.length - 1];
+    if (x > maxX) return maxX + (x - maxX) * 0.28;
+    if (x < minX) return minX + (x - minX) * 0.28;
+    return x;
   }
 
   function actualizarEstadoVisual(idx) {
-    const cards = track.querySelectorAll(".card");
     cards.forEach((card, i) => {
       const esActivo = i === idx;
       card.classList.toggle("activo", esActivo);
@@ -651,26 +691,83 @@ function crearCarrusel({
     if (indicador) indicador.textContent = `${idx + 1} / ${cards.length}`;
   }
 
-  function actualizarPosicion() {
-    const cards = track.querySelectorAll(".card");
+  /* Pinta un frame: posición del track + foco continuo de cada tarjeta */
+  function aplicarFrame(seguirIndice) {
     if (!cards.length) return;
+    track.style.transform = `translate3d(${posX}px, 0, 0)`;
 
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    track.style.transition = reducedMotion
-      ? "none"
-      : "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)";
-    void track.offsetWidth;
+    let cercano = 0;
+    let minD = Infinity;
+    for (let i = 0; i < cards.length; i++) {
+      const d = Math.abs(posX - targetXs[i]);
+      if (d < minD) { minD = d; cercano = i; }
+      const foco = 1 - Math.min(1, d / paso);
+      const suave = foco * foco * (3 - 2 * foco); // smoothstep
+      cards[i].style.setProperty("--foco", suave.toFixed(3));
+    }
 
+    // Contador y tarjeta activa en vivo mientras se arrastra
+    if (seguirIndice && cercano !== indiceActivo) {
+      indiceActivo = cercano;
+      actualizarEstadoVisual(indiceActivo);
+    }
+  }
+
+  function tick(ts) {
+    rafId = null;
+    const dt = Math.min(0.032, ((ts - lastFrame) / 1000) || 0.016);
+    lastFrame = ts;
+
+    if (!isDragging && !enRueda) {
+      const aceleracion = RIGIDEZ * (destinoX - posX) - AMORTIGUACION * velX;
+      velX += aceleracion * dt;
+      posX += velX * dt;
+      if (Math.abs(destinoX - posX) < 0.3 && Math.abs(velX) < 8) {
+        posX = destinoX;
+        velX = 0;
+        aplicarFrame(false);
+        return; // reposo: el bucle se detiene
+      }
+    }
+
+    aplicarFrame(isDragging || enRueda);
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function iniciarAnimacion() {
+    if (rafId === null) {
+      lastFrame = performance.now();
+      rafId = requestAnimationFrame(tick);
+    }
+  }
+
+  function actualizarPosicion(animar = true) {
+    if (!track.querySelector(".card")) return;
+    calcularMedidas();
     actualizarEstadoVisual(indiceActivo);
+    destinoX = targetXs[indiceActivo];
 
-    const targetX = obtenerTargetX(indiceActivo);
-    track.style.transform = `translateX(${targetX}px)`;
+    if (!animar || reducedMotionQuery.matches) {
+      posX = destinoX;
+      velX = 0;
+      aplicarFrame(false);
+    } else {
+      iniciarAnimacion();
+    }
   }
 
   function irA(index) {
     if (index < 0 || index >= items.length) return;
     indiceActivo = index;
-    actualizarPosicion();
+    actualizarPosicion(true);
+  }
+
+  /* Repinta las tarjetas (p. ej. al cambiar de idioma) sin duplicar listeners */
+  function redibujar() {
+    track.innerHTML = items.map((item, i) => renderCard(item, i, i === indiceActivo)).join("");
+    if (viewport.clientWidth > 0) {
+      actualizarPosicion(false);
+    }
   }
 
   function render() {
@@ -718,8 +815,8 @@ function crearCarrusel({
       });
     }
 
-    actualizarPosicion();
-    setTimeout(actualizarPosicion, 80);
+    actualizarPosicion(false);
+    setTimeout(() => { if (!isDragging) actualizarPosicion(false); }, 80);
   }
 
   // Prevenir arrastre nativo no deseado de imágenes
@@ -727,15 +824,17 @@ function crearCarrusel({
 
   viewport.addEventListener("pointerdown", (e) => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
+    calcularMedidas();
     isDragging = true;
     pointerStartX = e.clientX;
     pointerStartY = e.clientY;
     lastPointerX = e.clientX;
     lastPointerTime = performance.now();
     velocityX = 0;
+    velX = 0;
     hasMovedSignificant = false;
     isHorizontalDrag = null;
-    baseTargetX = obtenerTranslateXActual();
+    baseTargetX = posX; // se puede "agarrar" el carrusel en pleno movimiento
   });
 
   window.addEventListener("pointermove", (e) => {
@@ -749,8 +848,11 @@ function crearCarrusel({
           isHorizontalDrag = true;
           hasMovedSignificant = true;
           viewport.classList.add("arrastrando");
-          track.style.transition = "none";
           try { viewport.setPointerCapture(e.pointerId); } catch (_) {}
+          // Evita un tirón inicial: el arrastre arranca desde donde está el puntero
+          pointerStartX = e.clientX;
+          lastPointerX = e.clientX;
+          lastPointerTime = performance.now();
         } else {
           // Gesto vertical: liberar para permitir scroll de página nativo
           isHorizontalDrag = false;
@@ -764,54 +866,19 @@ function crearCarrusel({
 
     if (!isHorizontalDrag) return;
 
-    if (Math.abs(diffX) > 5) {
-      hasMovedSignificant = true;
-      if (!viewport.classList.contains("arrastrando")) {
-        viewport.classList.add("arrastrando");
-      }
-    }
-
-    // Medición en tiempo real de velocidad para inercia
+    // Velocidad suavizada para la inercia
     const now = performance.now();
     const dt = now - lastPointerTime;
-    if (dt > 10) {
-      velocityX = (e.clientX - lastPointerX) / dt;
+    if (dt > 8) {
+      const vInstante = (e.clientX - lastPointerX) / dt;
+      velocityX = 0.65 * vInstante + 0.35 * velocityX;
       lastPointerX = e.clientX;
       lastPointerTime = now;
     }
 
-    // Posición continua sin limitar a una sola tarjeta
-    const rawX = baseTargetX + diffX;
-    const maxX = obtenerTargetX(0);
-    const minX = obtenerTargetX(items.length - 1);
-
-    // Resistencia elástica en los extremos
-    let currentX = rawX;
-    if (rawX > maxX) {
-      currentX = maxX + (rawX - maxX) * 0.28;
-    } else if (rawX < minX) {
-      currentX = minX + (rawX - minX) * 0.28;
-    }
-
-    track.style.transition = "none";
-    track.style.transform = `translateX(${currentX}px)`;
-
-    // Efecto foco en vivo: actualizar la tarjeta activa más cercana al centro del carrusel
-    let minDiff = Infinity;
-    let closestIdx = indiceActivo;
-    for (let i = 0; i < items.length; i++) {
-      const tx = obtenerTargetX(i);
-      const diff = Math.abs(currentX - tx);
-      if (diff < minDiff) {
-        minDiff = diff;
-        closestIdx = i;
-      }
-    }
-
-    if (closestIdx !== indiceActivo) {
-      indiceActivo = closestIdx;
-      actualizarEstadoVisual(indiceActivo);
-    }
+    // Seguimiento 1:1 con resistencia elástica en los límites
+    posX = conElastico(baseTargetX + (e.clientX - pointerStartX));
+    iniciarAnimacion();
   });
 
   const finalizarArrastre = (e) => {
@@ -825,33 +892,42 @@ function crearCarrusel({
 
     setTimeout(() => { hasMovedSignificant = false; }, 250);
 
-    // Si el cursor se frenó antes de soltar, anular inercia
-    const timeSinceLastMove = performance.now() - lastPointerTime;
-    if (timeSinceLastMove > 100) {
-      velocityX = 0;
-    }
+    // Si el cursor se detuvo antes de soltar, no hay inercia
+    const sinMover = performance.now() - lastPointerTime;
+    const v = sinMover > 80 ? 0 : velocityX;
 
-    // Pequeño impulso por inercia según velocidad
-    let impulse = 0;
-    if (velocityX < -1.2) {
-      impulse = 2;
-    } else if (velocityX < -0.3) {
-      impulse = 1;
-    } else if (velocityX > 1.2) {
-      impulse = -2;
-    } else if (velocityX > 0.3) {
-      impulse = -1;
-    }
+    // Proyección con inercia: un lanzamiento rápido avanza como mucho una
+    // tarjeta más allá de donde está el track, nunca saltos de 2 en 2.
+    const empuje = Math.max(-paso * 0.75, Math.min(paso * 0.75, v * 450));
+    const destino = indiceMasCercano(posX + empuje);
 
-    let destino = indiceActivo + impulse;
-    destino = Math.max(0, Math.min(items.length - 1, destino));
-
-    irA(destino);
+    velX = v * 1000; // el muelle hereda la velocidad del gesto
+    indiceActivo = destino;
+    actualizarPosicion(true);
   };
+
+  /* Trackpad / rueda horizontal: desplazamiento continuo y snap al soltar */
+  viewport.addEventListener("wheel", (e) => {
+    if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return; // scroll vertical normal
+    e.preventDefault();
+    if (!targetXs.length) calcularMedidas();
+    enRueda = true;
+    velX = 0;
+    const maxX = targetXs[0] + 60;
+    const minX = targetXs[targetXs.length - 1] - 60;
+    posX = Math.max(minX, Math.min(maxX, posX - e.deltaX));
+    iniciarAnimacion();
+    clearTimeout(wheelTimer);
+    wheelTimer = setTimeout(() => {
+      enRueda = false;
+      indiceActivo = indiceMasCercano(posX);
+      actualizarPosicion(true);
+    }, 140);
+  }, { passive: false });
 
   window.addEventListener("pointerup", finalizarArrastre);
   window.addEventListener("pointercancel", finalizarArrastre);
-  window.addEventListener("resize", actualizarPosicion);
+  window.addEventListener("resize", () => actualizarPosicion(false));
 
   render();
 
@@ -859,7 +935,8 @@ function crearCarrusel({
     irA,
     anterior: () => { if (indiceActivo > 0) irA(indiceActivo - 1); },
     siguiente: () => { if (indiceActivo < items.length - 1) irA(indiceActivo + 1); },
-    actualizarPosicion,
+    actualizarPosicion: () => actualizarPosicion(false),
+    redibujar,
     getIndiceActivo: () => indiceActivo
   };
 }
@@ -928,6 +1005,7 @@ window.addEventListener("keydown", (e) => {
    MODAL — Detalle del proyecto
    ========================================================= */
 const modal = document.getElementById("modal");
+let modalAbierto = null; // { tipo: "proyecto" | "kaggle", i } para repintarlo al cambiar de idioma
 
 function renderizarEstrellas(rating) {
   const val  = Math.max(0, Math.min(5, Number(rating) || 0));
@@ -953,7 +1031,8 @@ function renderizarEstrellas(rating) {
 }
 
 function abrirModal(i) {
-  const p = PROYECTOS[i];
+  const p = traducirItem("proyectos", i, PROYECTOS[i]);
+  modalAbierto = { tipo: "proyecto", i };
 
   document.getElementById("modal-img").src = p.imagen;
   document.getElementById("modal-img").alt = p.titulo;
@@ -997,7 +1076,8 @@ function abrirModal(i) {
 }
 
 function abrirModalKaggle(i) {
-  const k = KAGGLE_COMPETICIONES[i];
+  const k = traducirItem("kaggle", i, KAGGLE_COMPETICIONES[i]);
+  modalAbierto = { tipo: "kaggle", i };
 
   document.getElementById("modal-img").src = k.imagen;
   document.getElementById("modal-img").alt = k.titulo;
@@ -1037,8 +1117,23 @@ function abrirModalKaggle(i) {
 
 function cerrarModal() {
   modal.hidden = true;
+  modalAbierto = null;
   document.body.classList.remove("modal-abierto");
 }
+
+/* Hook que llama cambiarIdioma() (i18n.js): repinta carruseles y modal abierto */
+function alCambiarIdioma() {
+  if (carruselProyectos) carruselProyectos.redibujar();
+  if (carruselKaggle) carruselKaggle.redibujar();
+  if (modal && !modal.hidden && modalAbierto) {
+    const caja = modal.querySelector(".modal-caja");
+    const scroll = caja.scrollTop;
+    if (modalAbierto.tipo === "kaggle") abrirModalKaggle(modalAbierto.i);
+    else abrirModal(modalAbierto.i);
+    caja.scrollTop = scroll;
+  }
+}
+window.alCambiarIdioma = alCambiarIdioma;
 
 modal.querySelector(".modal-cerrar").addEventListener("click", cerrarModal);
 modal.addEventListener("click", (e) => { if (e.target === modal) cerrarModal(); });
