@@ -21,7 +21,7 @@ const PROYECTOS = [
       "Matplotlib",
       "Machine Learning supervisado"
     ],
-    imagen: "images/proyecto-1.svg",
+    imagen: "images/proyecto-1.png",
     detalle: {
       descripcionLarga: "Predicción del retorno acumulado a 22 días de las siete mayores tecnológicas del S&P 500, a partir de 1.391.801 registros diarios de precios de FactSet (2014-2025). Compara cuatro modelos y evalúa si las predicciones permiten batir a una estrategia de comprar y mantener.",
       objetivo: "Comprobar si los retornos históricos diarios bastan para anticipar el comportamiento mensual de las Magnificent 7. Sirve al inversor que quiere apoyar sus decisiones en datos y al analista que valora si una estrategia basada solo en precios supera al mercado.",
@@ -89,7 +89,7 @@ const PROYECTOS = [
       "Plotly",
       "Machine Learning supervisado"
     ],
-    imagen: "images/proyecto-3.svg",
+    imagen: "images/proyecto-3.png",
     detalle: {
       descripcionLarga: "Análisis de 25.134 clientes de tarjetas de crédito del dataset Credit Card Approval Prediction (Kaggle), que integra solicitudes e historial mensual de pagos. Estudia qué características se asocian a haber tenido un retraso de más de 30 días en algún pago.",
       objetivo: "Predecir qué clientes incumplirán algún pago con más de 30 días de retraso y comparar modelos para detectarlos. Sirve a las entidades de crédito para priorizar revisiones manuales, pedir garantías o solicitar más información antes de conceder crédito.",
