@@ -203,43 +203,43 @@ const PROYECTOS = [
    ========================================================= */
 const KAGGLE_COMPETICIONES = [
   {
-    titulo: "Predict Student Performance from Game Play",
-    subtitulo: "Predicción de rendimiento estudiantil mediante logs de juego",
-    badge: "Top 7% · Medalla de Bronce",
-    tipo: "Competencia Destacada",
-    posicion: "Posición: <strong>94 / 1.345 equipos</strong>",
-    descripcion: "Modelo de Machine Learning para predecir si los estudiantes responderán correctamente preguntas sobre un juego educativo a partir del análisis temporal de sus interacciones.",
-    tags: ["Python", "LightGBM", "Feature Engineering", "Time Series"],
+    titulo: "Titanic - Machine Learning from Disaster",
+    subtitulo: "Predicción de supervivencia de pasajeros del Titanic a partir de sus datos personales",
+    badge: "Machine Learning",
+    tipo: "",
+    posicion: "Validación: <strong>81,46 % Acc</strong>",
+    descripcion: "Problema de clasificación binaria que predice si un pasajero sobrevivió al naufragio del Titanic a partir de variables demográficas y del billete, como sexo, edad y clase.",
+    tags: ["Python", "XGBoost", "Scikit-learn", "Clasificación supervisada"],
     imagen: "images/proyecto-1.svg",
-    enlace: "https://www.kaggle.com/competitions",
+    enlace: "https://www.kaggle.com/competitions/titanic",
     detalle: {
-      descripcionLarga: "Modelo de Machine Learning para predecir si los estudiantes responderán correctamente preguntas sobre un juego educativo a partir del análisis temporal de sus interacciones.",
-      objetivo: "Predecir en tiempo real el éxito del estudiante en cada nivel evaluativo para permitir intervenciones pedagógicas adaptativas.",
+      descripcionLarga: "Problema de clasificación binaria que predice si un pasajero sobrevivió al naufragio del Titanic a partir de variables demográficas y del billete, como sexo, edad y clase.",
+      objetivo: "Identificar qué factores determinaron la supervivencia en un desastre marítimo, como introducción práctica a la clasificación supervisada.",
       resultados: [
-        "Feature engineering exhaustivo sobre ventanas temporales acumuladas y patrones de clics.",
-        "Modelo LightGBM con validación GroupKFold por estudiante para evitar data leakage.",
-        "Posición final en el Top 7% y medalla de bronce entre 1.345 equipos internacionales."
+        "Eliminación de variables con muchos nulos, imputación de edad y tarifa con la mediana y codificación de sexo y puerto.",
+        "Comparación de KNN y XGBoost con partición 80/20 en entrenamiento y validación, y reentrenamiento final con todos los datos.",
+        "Sin datos de score ni posición; XGBoost alcanzó un 81,46 % de accuracy en validación frente al 69,66 % de KNN."
       ],
-      enlace: "https://www.kaggle.com/competitions"
+      enlace: "https://www.kaggle.com/competitions/titanic"
     }
   },
   {
-    titulo: "Spaceship Titanic",
-    subtitulo: "Clasificación binaria y transporte interdimensional",
-    badge: "Top 12%",
-    tipo: "Tabular Series",
-    posicion: "Score: <strong>0.812 CV</strong>",
-    descripcion: "Limpieza y preprocesamiento de datos con imputación avanzada, análisis exploratorio, encoding de variables categóricas complejas y ensamblado de modelos XGBoost y CatBoost.",
-    tags: ["Python", "CatBoost", "XGBoost", "Ensemble"],
+    titulo: "Predicting Electric Vehicle Purchases",
+    subtitulo: "Predicción de compra de vehículos eléctricos a partir de datos sociodemográficos y de movilidad",
+    badge: "Machine Learning",
+    tipo: "",
+    posicion: "Validación: <strong>0,8402 ROC-AUC</strong>",
+    descripcion: "Clasificación binaria para predecir si una persona comprará un vehículo eléctrico a partir de sus datos demográficos, hábitos de desplazamiento, infraestructura de carga y factores ambientales.",
+    tags: ["Python", "XGBoost", "Scikit-learn", "Clasificación"],
     imagen: "images/proyecto-2.svg",
     enlace: "https://www.kaggle.com/competitions",
     detalle: {
-      descripcionLarga: "Limpieza y preprocesamiento de datos con imputación avanzada, análisis exploratorio, encoding de variables categóricas complejas y ensamblado de modelos XGBoost y CatBoost.",
-      objetivo: "Predecir qué pasajeros fueron transportados a una dimensión alternativa durante la colisión de la nave espacial.",
+      descripcionLarga: "Clasificación binaria para predecir si una persona comprará un vehículo eléctrico a partir de sus datos demográficos, hábitos de desplazamiento, infraestructura de carga y factores ambientales.",
+      objetivo: "Identificar a los compradores potenciales de vehículos eléctricos para orientar subsidios, infraestructura de carga y campañas comerciales.",
       resultados: [
-        "Extracción de cabina, cubierta, número y lado para enriquecer la señal espacial.",
-        "Imputación por grupos de edad, gasto en comodidades y origen planetario.",
-        "Ensemble ponderado de XGBoost, CatBoost y LightGBM alcanzando 0.812 en cross-validation."
+        "Codificación ordinal de variables categóricas y binarias; el dataset de 668.665 registros no tenía nulos.",
+        "Modelo XGBoost con peso de clase positiva y validación hold-out 80/20 sobre los datos de entrenamiento.",
+        "Resultado: sin datos de clasificación; en validación, accuracy de 0,90 y ROC-AUC de 0,8402."
       ],
       enlace: "https://www.kaggle.com/competitions"
     }
@@ -472,6 +472,7 @@ const MAPA_COLORES_SKILLS = {
 
   // Kaggle & ML
   "Machine Learning": "lima",
+  "Clasificación supervisada": "morado",
   "LightGBM": "amarillo",
   "CatBoost": "amarillo",
   "XGBoost": "naranja",
@@ -594,7 +595,7 @@ function renderCardKaggle(k, i, esActivo) {
       <img class="kaggle-thumb" src="${k.imagen}" alt="Miniatura — ${k.titulo}" loading="lazy" draggable="false" />
       <div class="kaggle-meta">
         <span class="kaggle-badge">${k.badge}</span>
-        <span class="kaggle-tipo">${k.tipo}</span>
+        ${k.tipo ? `<span class="kaggle-tipo">${k.tipo}</span>` : ""}
       </div>
       <h3>${k.titulo}</h3>
       <p class="subtitulo">${k.subtitulo}</p>
@@ -1090,7 +1091,7 @@ function abrirModalKaggle(i) {
   // En Kaggle mostramos badge de medalla y posición en lugar de rating numérico
   document.getElementById("modal-rating").innerHTML = `
     <span class="kaggle-badge" style="font-size:0.78rem; padding: 4px 10px;">${k.badge}</span>
-    <span class="kaggle-tipo" style="font-size:0.8rem;">${k.tipo}</span>
+    ${k.tipo ? `<span class="kaggle-tipo" style="font-size:0.8rem;">${k.tipo}</span>` : ""}
     <span class="kaggle-posicion" style="font-size:0.84rem; border-top: none; padding-top: 0;">${k.posicion}</span>
   `;
 

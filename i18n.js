@@ -226,34 +226,35 @@ const CONTENIDO_EN = {
   ],
   kaggle: [
     {
-      subtitulo: "Predicting student performance through game logs",
-      badge: "Top 7% · Bronze Medal",
-      tipo: "Featured Competition",
-      posicion: "Position: <strong>94 / 1,345 teams</strong>",
-      descripcion: "Machine Learning model to predict whether students will correctly answer questions about an educational game based on a temporal analysis of their interactions.",
+      subtitulo: "Titanic passenger survival prediction from personal data",
+      badge: "Machine Learning",
+      tipo: "",
+      posicion: "Validation: <strong>81.46% Acc</strong>",
+      descripcion: "Binary classification problem predicting whether a passenger survived the Titanic shipwreck based on demographic and ticket variables such as sex, age, and class.",
       detalle: {
-        descripcionLarga: "Machine Learning model to predict whether students will correctly answer questions about an educational game based on a temporal analysis of their interactions.",
-        objetivo: "To predict in real time the student's success at each assessment level to enable adaptive teaching interventions.",
+        descripcionLarga: "Binary classification problem predicting whether a passenger survived the Titanic shipwreck based on demographic and ticket variables such as sex, age, and class.",
+        objetivo: "Identify which factors determined survival in a maritime disaster, as a practical introduction to supervised classification.",
         resultados: [
-          "Exhaustive feature engineering over cumulative time windows and click patterns.",
-          "LightGBM model with GroupKFold validation by student to avoid data leakage.",
-          "Final position in the Top 7% and bronze medal among 1,345 international teams."
+          "Removal of variables with high missing rates, median imputation for age and fare, and encoding of sex and embarkation port.",
+          "Comparison of KNN and XGBoost with an 80/20 train/validation split, and final retraining on all data.",
+          "No leaderboard score or rank data; XGBoost achieved 81.46% accuracy in validation compared to 69.66% for KNN."
         ]
       }
     },
     {
-      subtitulo: "Binary classification and interdimensional transport",
-      badge: "Top 12%",
-      tipo: "Tabular Series",
-      posicion: "Score: <strong>0.812 CV</strong>",
-      descripcion: "Data cleaning and preprocessing with advanced imputation, exploratory analysis, encoding of complex categorical variables and ensembling of XGBoost and CatBoost models.",
+      titulo: "Predicting Electric Vehicle Purchases",
+      subtitulo: "Electric vehicle purchase prediction based on sociodemographic and mobility data",
+      badge: "Machine Learning",
+      tipo: "",
+      posicion: "Validation: <strong>0.8402 ROC-AUC</strong>",
+      descripcion: "Binary classification to predict whether an individual will purchase an electric vehicle based on demographic data, commuting habits, charging infrastructure, and environmental factors.",
       detalle: {
-        descripcionLarga: "Data cleaning and preprocessing with advanced imputation, exploratory analysis, encoding of complex categorical variables and ensembling of XGBoost and CatBoost models.",
-        objetivo: "To predict which passengers were transported to an alternate dimension during the spaceship collision.",
+        descripcionLarga: "Binary classification to predict whether an individual will purchase an electric vehicle based on demographic data, commuting habits, charging infrastructure, and environmental factors.",
+        objetivo: "Identify potential electric vehicle buyers to guide subsidies, charging infrastructure, and commercial campaigns.",
         resultados: [
-          "Extraction of cabin, deck, number and side to enrich the spatial signal.",
-          "Imputation by age group, amenity spending and home planet.",
-          "Weighted ensemble of XGBoost, CatBoost and LightGBM reaching 0.812 in cross-validation."
+          "Ordinal encoding of categorical and binary variables; the 668,665-record dataset had no missing values.",
+          "XGBoost model with positive class weighting and an 80/20 hold-out validation split on training data.",
+          "Result: no classification leaderboard data; achieved 0.90 accuracy and 0.8402 ROC-AUC in validation."
         ]
       }
     },
@@ -284,6 +285,8 @@ const TAGS_EN = {
   "Estadística": "Statistics",
   "Análisis de correlaciones": "Correlation analysis",
   "Machine Learning supervisado": "Supervised Machine Learning",
+  "Clasificación supervisada": "Supervised classification",
+  "Clasificación": "Classification",
   "Automatización": "Automation"
 };
 
