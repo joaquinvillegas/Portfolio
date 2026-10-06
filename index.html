@@ -36,9 +36,9 @@
   <!-- ===== BARRA DE NAVEGACIÓN SUPERIOR ===== -->
   <header class="navbar-wrapper">
     <nav class="navbar" aria-label="Navegación principal">
-      <a href="#about"    class="nav-link" id="nav-about"    data-i18n="nav_about" aria-label="Ir a About Me">About Me</a>
-      <a href="#projects" class="nav-link" id="nav-projects" data-i18n="nav_projects" aria-label="Ir a Projects">Projects</a>
-      <a href="#kaggle"   class="nav-link" id="nav-kaggle"   data-i18n="nav_kaggle" aria-label="Ir a Kaggle Competitions">Kaggle Competitions</a>
+      <a href="#about"    class="nav-link" id="nav-about"    data-i18n="nav_about" aria-label="Ir a Sobre mí">Sobre mí</a>
+      <a href="#projects" class="nav-link" id="nav-projects" data-i18n="nav_projects" aria-label="Ir a Proyectos">Proyectos</a>
+      <a href="#kaggle"   class="nav-link" id="nav-kaggle"   data-i18n="nav_kaggle" aria-label="Ir a Competiciones Kaggle">Competiciones Kaggle</a>
     </nav>
     <div class="lang-selector" role="group" aria-label="Selector de idioma / Language selector">
       <button type="button" class="lang-btn" id="lang-en" aria-label="English" aria-pressed="false" onclick="cambiarIdioma('en')">EN</button>
@@ -142,7 +142,7 @@
     <!-- Carrusel horizontal generado desde el array PROYECTOS en script.js -->
     <section id="projects" class="seccion proyectos" aria-labelledby="projects-titulo">
       <div class="proyectos-cabecera">
-        <h2 class="titulo-seccion" id="projects-titulo">Projects</h2>
+        <h2 class="titulo-seccion" id="projects-titulo" data-i18n="nav_projects">Proyectos</h2>
       </div>
 
       <div class="carrusel-viewport" id="carrusel-viewport" tabindex="0"
@@ -155,7 +155,7 @@
         <button class="carrusel-btn" id="carrusel-prev" aria-label="Proyecto anterior" data-i18n-aria="carrusel_prev_aria" disabled>
           <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <span class="carrusel-indicador" id="carrusel-indicador" aria-live="polite">1 / 6</span>
+        <span class="carrusel-indicador" id="carrusel-indicador" aria-live="polite">1 / 5</span>
         <button class="carrusel-btn" id="carrusel-next" aria-label="Siguiente proyecto" data-i18n-aria="carrusel_next_aria">
           <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
         </button>
@@ -167,7 +167,7 @@
     <!-- EDITA IMÁGENES: cambia el atributo src de cada <img class="kaggle-thumb"> por la ruta de tu imagen -->
     <section id="kaggle" class="seccion kaggle" aria-labelledby="kaggle-titulo">
       <div class="seccion-cabecera">
-        <h2 class="titulo-seccion" id="kaggle-titulo">Kaggle Competitions</h2>
+        <h2 class="titulo-seccion" id="kaggle-titulo" data-i18n="nav_kaggle">Competiciones Kaggle</h2>
         <a class="kaggle-perfil-enlace boton"
            href="https://www.kaggle.com/joaqunvc"
            target="_blank" rel="noopener"
@@ -188,7 +188,7 @@
         <button class="carrusel-btn" id="carrusel-prev-kaggle" aria-label="Competición anterior" data-i18n-aria="carrusel_prev_aria" disabled>
           <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
-        <span class="carrusel-indicador" id="carrusel-indicador-kaggle" aria-live="polite">1 / 3</span>
+        <span class="carrusel-indicador" id="carrusel-indicador-kaggle" aria-live="polite">1 / 2</span>
         <button class="carrusel-btn" id="carrusel-next-kaggle" aria-label="Siguiente competición" data-i18n-aria="carrusel_next_aria">
           <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
         </button>
@@ -273,7 +273,7 @@
     </div>
   </div>
 
-  <script src="i18n.js?v=5"></script>
-  <script src="script.js?v=5"></script>
+  <script src="i18n.js?v=6"></script>
+  <script src="script.js?v=6"></script>
 </body>
 </html>

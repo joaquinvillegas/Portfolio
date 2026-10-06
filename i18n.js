@@ -50,9 +50,9 @@ const TRANSLATIONS = {
   },
   es: {
     // Navbar
-    nav_about: "About Me",
-    nav_projects: "Projects",
-    nav_kaggle: "Kaggle Competitions",
+    nav_about: "Sobre mí",
+    nav_projects: "Proyectos",
+    nav_kaggle: "Competiciones Kaggle",
 
     // CV / About Me
     cv_tag: "CV",
@@ -208,20 +208,6 @@ const CONTENIDO_EN = {
           "The most frequent terms are Tesla, SpaceX and cars, and positive words clearly outnumber negative ones."
         ]
       }
-    },
-    {
-      titulo: "Report Automation",
-      subtitulo: "Python · Excel",
-      descripcion: "Python script that extracts data, transforms it and automatically generates monthly Excel reports with charts.",
-      detalle: {
-        descripcionLarga: "Simple pipeline with Pandas and OpenPyXL that reads several sources, validates the data, computes the KPIs and exports a formatted report ready to send.",
-        objetivo: "To eliminate repetitive manual work and errors in monthly reports.",
-        resultados: [
-          "Saves about 10 hours of work per month.",
-          "Zero manual copy errors since it was introduced.",
-          "Consistent report for all departments."
-        ]
-      }
     }
   ],
   kaggle: [
@@ -255,22 +241,6 @@ const CONTENIDO_EN = {
           "Ordinal encoding of categorical and binary variables; the 668,665-record dataset had no missing values.",
           "XGBoost model with positive class weighting and an 80/20 hold-out validation split on training data.",
           "Result: no classification leaderboard data; achieved 0.90 accuracy and 0.8402 ROC-AUC in validation."
-        ]
-      }
-    },
-    {
-      subtitulo: "House price prediction with 79 variables",
-      badge: "Tabular Regression",
-      tipo: "Learning Competition",
-      posicion: "Metric: <strong>0.114 RMSE</strong>",
-      descripcion: "Skewness handling with logarithmic transformations, Lasso/Ridge regularisation, hyperparameter optimisation with Optuna and final stacking.",
-      detalle: {
-        descripcionLarga: "Skewness handling with logarithmic transformations, Lasso/Ridge regularisation, hyperparameter optimisation with Optuna and final stacking.",
-        objetivo: "To build a robust predictive model to estimate residential sale prices from 79 heterogeneous variables.",
-        resultados: [
-          "Box-Cox and log transforms on highly skewed variables.",
-          "Bayesian hyperparameter optimisation with Optuna for regularised linear models and trees.",
-          "Stacking of Lasso, Ridge, GradientBoosting and XGBoost achieving a score of 0.114 RMSE."
         ]
       }
     }

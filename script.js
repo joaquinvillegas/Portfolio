@@ -176,24 +176,6 @@ const PROYECTOS = [
       ],
       enlace: "" // EDITA: [Enlace a GitHub] · [Enlace a la presentación]
     }
-  },
-  {
-    titulo: "Automatización de Informes",
-    subtitulo: "Python · Excel",
-    rating: 5.0, // EDITA: puntuación de 0 a 5
-    descripcion: "Script en Python que extrae datos, los transforma y genera automáticamente informes mensuales en Excel con gráficos.",
-    tags: ["Python", "Excel", "Automatización"],
-    imagen: "images/proyecto-6.svg",
-    detalle: {
-      descripcionLarga: "Pipeline sencillo con Pandas y OpenPyXL que lee varias fuentes, valida los datos, calcula los KPIs y exporta un informe formateado listo para enviar.",
-      objetivo: "Eliminar el trabajo manual repetitivo y los errores en los informes mensuales.",
-      resultados: [
-        "Ahorro de unas 10 horas de trabajo al mes.",
-        "Cero errores de copia manual desde su implantación.",
-        "Informe homogéneo para todos los departamentos."
-      ],
-      enlace: "https://github.com/joaquinvillegas/report-automation"
-    }
   }
 ];
 
@@ -232,7 +214,7 @@ const KAGGLE_COMPETICIONES = [
     descripcion: "Clasificación binaria para predecir si una persona comprará un vehículo eléctrico a partir de sus datos demográficos, hábitos de desplazamiento, infraestructura de carga y factores ambientales.",
     tags: ["Python", "XGBoost", "Scikit-learn", "Clasificación"],
     imagen: "images/proyecto-2.svg",
-    enlace: "https://www.kaggle.com/competitions",
+    enlace: "https://www.kaggle.com/c/playground-series-s6e9",
     detalle: {
       descripcionLarga: "Clasificación binaria para predecir si una persona comprará un vehículo eléctrico a partir de sus datos demográficos, hábitos de desplazamiento, infraestructura de carga y factores ambientales.",
       objetivo: "Identificar a los compradores potenciales de vehículos eléctricos para orientar subsidios, infraestructura de carga y campañas comerciales.",
@@ -241,28 +223,7 @@ const KAGGLE_COMPETICIONES = [
         "Modelo XGBoost con peso de clase positiva y validación hold-out 80/20 sobre los datos de entrenamiento.",
         "Resultado: sin datos de clasificación; en validación, accuracy de 0,90 y ROC-AUC de 0,8402."
       ],
-      enlace: "https://www.kaggle.com/competitions"
-    }
-  },
-  {
-    titulo: "House Prices: Advanced Regression Techniques",
-    subtitulo: "Predicción de precios inmobiliarios con 79 variables",
-    badge: "Regresión Tabular",
-    tipo: "Competencia de Aprendizaje",
-    posicion: "Métrica: <strong>0.114 RMSE</strong>",
-    descripcion: "Tratamiento de asimetría (skewness) con transformaciones logarítmicas, regularización Lasso/Ridge, optimización de hiperparámetros con Optuna y stacking final.",
-    tags: ["Python", "Scikit-learn", "Optuna", "Lasso / Ridge"],
-    imagen: "images/proyecto-3.svg",
-    enlace: "https://www.kaggle.com/competitions",
-    detalle: {
-      descripcionLarga: "Tratamiento de asimetría (skewness) con transformaciones logarítmicas, regularización Lasso/Ridge, optimización de hiperparámetros con Optuna y stacking final.",
-      objetivo: "Desarrollar un modelo predictivo robusto para tasar el precio de venta residencial a partir de 79 variables heterogéneas.",
-      resultados: [
-        "Transformación Box-Cox y log-transform sobre variables con alta asimetría.",
-        "Optimización bayesiana de hiperparámetros con Optuna para modelos lineales regularizados y árboles.",
-        "Stacking de Lasso, Ridge, GradientBoosting y XGBoost logrando un score de 0.114 RMSE."
-      ],
-      enlace: "https://www.kaggle.com/competitions"
+      enlace: "https://www.kaggle.com/c/playground-series-s6e9"
     }
   }
 ];
