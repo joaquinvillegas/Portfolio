@@ -54,7 +54,7 @@ const PROYECTOS = [
       "Estadística",
       "Análisis de correlaciones"
     ],
-    imagen: "images/proyecto-airbnb.png",
+    imagen: "images/image project 2.png",
     detalle: {
       descripcionLarga: "Análisis exploratorio de 41.714 alojamientos de Airbnb en Ámsterdam, Atenas, Barcelona, Berlín, Budapest, Lisboa, París, Roma y Viena. Estudia cómo se relacionan precio, ubicación, tipo de alojamiento, limpieza, satisfacción y condición de superhost.",
       objetivo: "Identificar qué variables se asocian al precio y a la satisfacción de los huéspedes en alojamientos de nueve ciudades europeas. Para el anfitrión, sirve de referencia para fijar el precio y priorizar lo que mejora las valoraciones. Para el huésped, ayuda a entender por qué los precios varían entre ciudades y qué valoraciones conviene mirar.",
@@ -124,7 +124,7 @@ const PROYECTOS = [
       "Seaborn",
       "Deep Learning"
     ],
-    imagen: "images/proyecto-4.svg",
+    imagen: "images/image project 4.png",
     detalle: {
       descripcionLarga: "Clasificación de emociones faciales con una red neuronal convolucional sobre FER2013, un conjunto de 35.887 imágenes de 48×48 píxeles obtenido de Hugging Face. Estudia si la expresión de la cara permite detectar el estado emocional de quien usa una máquina expendedora.",
       objetivo: "Evaluar si una CNN puede reconocer el estado emocional de un usuario a partir de su expresión facial para personalizar recomendaciones de bebidas. Sirve a marketing y a desarrollo de producto para valorar la viabilidad del sistema y decidir cómo mejorarlo antes de aplicarlo en máquinas reales.",
@@ -158,7 +158,7 @@ const PROYECTOS = [
       "Seaborn",
       "NLP"
     ],
-    imagen: "images/proyecto-5.svg",
+    imagen: "images/image project 5.png",
     detalle: {
       descripcionLarga: "Análisis de sentimiento de 50.395 tweets de Elon Musk (tras eliminar duplicados de 55.099) con VADER y un modelo RoBERTa para redes sociales. Estudia cómo evoluciona el tono en el tiempo y si se relaciona con el precio diario de las acciones de Tesla.",
       objetivo: "Evaluar si el tono de los mensajes públicos de Musk se relaciona con la cotización de Tesla. Sirve a analistas e inversores que quieran valorar si el sentimiento de figuras influyentes puede incorporarse a modelos de cartera o de predicción de precios.",
@@ -192,7 +192,7 @@ const KAGGLE_COMPETICIONES = [
     posicion: "Validación: <strong>81,46 % Acc</strong>",
     descripcion: "Problema de clasificación binaria que predice si un pasajero sobrevivió al naufragio del Titanic a partir de variables demográficas y del billete, como sexo, edad y clase.",
     tags: ["Python", "XGBoost", "Scikit-learn", "Clasificación supervisada"],
-    imagen: "images/proyecto-1.svg",
+    imagen: "images/image kaggle 1.png",
     enlace: "https://www.kaggle.com/competitions/titanic",
     detalle: {
       descripcionLarga: "Problema de clasificación binaria que predice si un pasajero sobrevivió al naufragio del Titanic a partir de variables demográficas y del billete, como sexo, edad y clase.",
@@ -213,7 +213,7 @@ const KAGGLE_COMPETICIONES = [
     posicion: "Validación: <strong>0,8402 ROC-AUC</strong>",
     descripcion: "Clasificación binaria para predecir si una persona comprará un vehículo eléctrico a partir de sus datos demográficos, hábitos de desplazamiento, infraestructura de carga y factores ambientales.",
     tags: ["Python", "XGBoost", "Scikit-learn", "Clasificación"],
-    imagen: "images/proyecto-2.svg",
+    imagen: "images/image kaggle 2.png",
     enlace: "https://www.kaggle.com/c/playground-series-s6e9",
     detalle: {
       descripcionLarga: "Clasificación binaria para predecir si una persona comprará un vehículo eléctrico a partir de sus datos demográficos, hábitos de desplazamiento, infraestructura de carga y factores ambientales.",
